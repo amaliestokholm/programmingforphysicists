@@ -1,5 +1,6 @@
 #ifndef HAVE_KOMPLEX_H /* this is necessary for multiple includes */
 
+// Define a new type of struct
 struct komplex {double re; double im;};
 typedef struct komplex komplex;
 
@@ -8,18 +9,15 @@ void    komplex_set      (komplex* z, double x, double y);   /* z is set to x+i*
 komplex komplex_new      (double x, double y);   /* returns x+i*y */
 komplex komplex_add      (komplex a, komplex b); /* returns a+b */
 komplex komplex_sub      (komplex a, komplex b); /* returns a-b */
-
-/* the following is optional */
 int     komplex_equal    (komplex a, komplex b); /* returns 1 if equal, 0 otherwise */
 komplex komplex_mul      (komplex a, komplex b); /* returns a*b */
 komplex komplex_div      (komplex a, komplex b); /* returns a/b */
 komplex komplex_conjugate(komplex z);            /* returns complex conjugate */
-komplex komplex_abs      (komplex z);
-komplex komplex_exp      (komplex z);
-komplex komplex_sin      (komplex z);
-komplex komplex_cos      (komplex z);
-komplex komplex_sqrt     (komplex z);
-/* end of optional */
+komplex komplex_abs      (komplex z);		 /* returns absolute value */
+komplex komplex_exp      (komplex z);		 /* returns e^z */
+komplex komplex_sin      (komplex z);		 /* returns sin(z) */
+komplex komplex_cos      (komplex z);		 /* returns cos(z) */
+komplex komplex_sqrt     (komplex z);		 /* returns sqrt(z) */
 
 #define HAVE_KOMPLEX_H
 #endif
