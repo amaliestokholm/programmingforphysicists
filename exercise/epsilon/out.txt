@@ -19,5 +19,8 @@ dowhile: epsilon = 2.22045e-16, dbl_epsilon = 2.22045e-16
 dowhile: epsilon = 1.0842e-19, dbl_epsilon = 1.0842e-19
 Sum_up: 15.4252
 Sum_down: 30.7105
-eq1 = 1
+a=1, b=1
+Are they equal? Answer=true
 eq2 = 0
+a=1, b=2
+Are they equal? Answer=false

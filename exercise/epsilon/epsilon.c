@@ -237,11 +237,13 @@ int main(){
 	double a = 1.00;
 	double b = a;
 	int eq1 = equal(a, b, 0.001, e_dw);
-	printf("eq1 = %d\n", eq1);
-	int eq2 = equal(1, 2, 0.005, 0.01);
-	printf("eq2 = %d\n", eq2);
+	printf("a=%g, b=%g\nAre they equal? Answer=%s\n", a, b, (eq1 ? "true" : "false"));
+	double c = 2;
+	int eq2 = equal(a, c, 0.005, e_dw);
+	printf("a=%g, b=%g\nAre they equal? Answer=%s\n", a, c, (eq2 ? "true" : "false"));
 return 0;
 }
+
 
 
 
