@@ -68,7 +68,7 @@ int komplex_equal(komplex a, komplex b ) {
 
 komplex komplex_mul(komplex a, komplex b) {
 	double x = (a.re * b.re) - (a.im * b.im);
-	double y = (a.re * b.re) + (a.im * b.im);
+	double y = (a.re * b.im) + (a.im * b.re);
 	komplex result = {.re = x, .im = y};
 	return result;
 }

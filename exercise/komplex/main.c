@@ -9,10 +9,10 @@
 
 int main()
 {
-	komplex a = { RND, RND };
-	komplex b = { RND, RND };
+	komplex a = { 0, 2 };
+	komplex b = { 0, 2 };
 	komplex z, w;
-	int eq1, eq2;
+	int eq1, eq2, eq1_c, eq2_c;
 	complex A = a.re + a.im * I;
 	complex B = b.re + b.im * I;
 
@@ -66,11 +66,15 @@ int main()
 	z = a;
 	eq1 = komplex_equal(a, z);
 	printf("Is a = z? Answer = %s\n", (eq1 ? "true" : "false"));
+	eq1_c = (z.re == a.re && z.im == a.im);
+	printf("Actually %s\n", (eq1_c ? "true" : "false"));
 	komplex_print("z = b =", b);
 	z = b;
 	eq2 = komplex_equal(a, z);
 	printf("Is a = z? Answer = %s\n", (eq2 ? "true" : "false"));
-	if (eq1 == 1 && eq2 == 0) 
+	eq2_c = (z.re == a.re && z.im == a.im);
+	printf("Actually %s\n", (eq2_c ? "true" : "false"));
+	if (eq1 == eq1_c && eq2 == eq2_c) 
 		printf("Test passed\n\n");
 	else
 		printf("Test failed\n\n");
