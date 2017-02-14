@@ -15,7 +15,7 @@ const komplex komplex_I = { 0, 1 };
 
 
 void komplex_print(char* s, komplex z) {
-	printf("%s %g + %g i", s, z.re, z.im)
+	printf("%s %g + %g i\n", s, z.re, z.im);
 }
 
 
@@ -97,9 +97,11 @@ komplex komplex_conjugate(komplex z) {
 }
 
 
-komplex komplex_abs(komplez z) {
+komplex komplex_abs(komplex z) {
+	double abs;
 	abs = sqrt(pow(z.re, 2) + pow(z.im, 2));
-	return abs;
+	komplex result = komplex_new(abs, 0);
+	return result;
 }
 
 
@@ -128,7 +130,11 @@ komplex komplex_cos(komplex z) {
 
 
 komplex komplex_sqrt(komplex z) {
+	komplex r;
+	komplex sqrt_z;
 	r = komplex_abs(z);
-	sqrt_z = sqrt(r) * (z + r) / komplex_abs(z + r);
+	r.re = sqrt(r.re);
+	komplex zr = komplex_add(z, r);
+	sqrt_z = komplex_mul(r, komplex_div(zr, komplex_abs(zr)));
 	return sqrt_z;
 }

@@ -1,0 +1,85 @@
+
+Testing komplex_set...
+a= 0.840188 + 0.394383 i
+z = a
+z= 0.840188 + 0.394383 i
+Test passed
+
+Testing komplex_new...
+a = 0.840188 + 0.394383 i
+x = 0.840188, y = 0.394383
+z = x+iy
+z = 0.840188 + 0.394383 i
+Test passed
+
+Testing komplex_add...
+a = 0.840188 + 0.394383 i
+b = 0.783099 + 0.79844 i
+a+b should   = 1.62329 + 1.19282 i
+a+b actually = 1.62329 + 1.19282 i
+Test passed
+
+Testing komplex_sub...
+a = 0.840188 + 0.394383 i
+b = 0.783099 + 0.79844 i
+a-b should   = 0.0570885 + -0.404057 i
+a-b actually = 0.0570885 + -0.404057 i
+Test passed
+
+Testing komplex_equal...
+z = a = 0.840188 + 0.394383 i
+Is a = z? Answer = true
+z = b = 0.783099 + 0.79844 i
+Is a = z? Answer = false
+Test passed
+
+Testing komplex_mul...
+a= 0.840188 + 0.394383 i
+b= 0.783099 + 0.79844 i
+a*b should   = 0.343059 + 0.97968 i
+a*b actually = 0.343059 + 0.972841 i
+Test failed
+
+Testing komplex_div...
+a= 0.840188 + 0.394383 i
+b= 0.783099 + 0.79844 i
+a/b should   = 0.777806 + -0.289425 i
+a/b actually = 0.777806 + -0.289425 i
+Test passed
+
+Testing komplex_conjugate...
+a= 0.840188 + 0.394383 i
+a* should   = 0.840188 + -0.394383 i
+a* actually = 0.840188 + -0.394383 i
+Test passed
+
+Testing komplex_abs...
+a= 0.840188 + 0.394383 i
+abs(a) should   = 0.928145 + 0 i
+abs(a) actually = 0.928145 + 0 i
+Test passed
+
+testing komplex_exp...
+a= 0.840188 + 0.394383 i
+exp(a) should   = 2.13895 + 0.890205 i
+exp(a) actually = 2.13895 + 0.890205 i
+test passed
+
+Testing komplex_sin...
+a= 0.840188 + 0.394383 i
+sin(a) should   = 0.803443 + 0.270056 i
+sin(a) actually = 0.803443 + 0.270056 i
+Test passed
+
+Testing komplex_cos...
+a= 0.840188 + 0.394383 i
+cos(a) should   = 0.719896 + -0.301398 i
+cos(a) actually = 0.719896 + -0.301398 i
+Test passed
+
+Testing komplex_sqrt...
+a= 0.840188 + 0.394383 i
+sqrt(a) should   = 0.940301 + 0.209711 i
+sqrt(a) actually = 0.941165 + 0.941165 i
+Test failed
+
