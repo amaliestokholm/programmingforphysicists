@@ -15,17 +15,28 @@ int main()
 	complex A = a.re + a.im * I;
 	complex B = b.re + b.im * I;
 
-	printf("\ntesting komplex_set...\n");
+	printf("\nTesting komplex_set...\n");
 	komplex_print("a=", a);
-	printf("setting z <-- a\n");
+	printf("z = a\n");
 	komplex_set(&z, a.re, a.im);
 	komplex_print("z=", z);
 	if (komplex_equal(z, a))
-		printf("test passed\n\n");
+		printf("Test passed\n\n");
 	else
-		printf("test falied\n\n");
+		printf("Test failed\n\n");
 
-	printf("testing komplex_add...\n");
+	printf("\nTesting komplex_new...\n");
+	komplex_print("a=", a);
+	printf("a = %g, b = %g", a.re, a.im);
+	printf("z = a+ib\n");
+	komplex z = komplex_new(a.re, a.im);
+	komplex_print("z=", z);
+	if (komplex_equal(z, a))
+		printf("Test passed\n\n");
+	else
+		printf("Test failed\n\n");
+
+	printf("Testing komplex_add...\n");
 	komplex_print("a=", a);
 	komplex_print("b=", b);
 	z = komplex_add(a, b);
@@ -33,9 +44,21 @@ int main()
 	komplex_print("a+b should   =", w);
 	komplex_print("a+b actually =", z);
 	if (komplex_equal(w, z))
-		printf("test passed\n\n");
+		printf("Test passed\n\n");
 	else
-		printf("test falied\n\n");
+		printf("Test failed\n\n");
+
+	printf("Testing komplex_sub...\n");
+	komplex_print("a=", a);
+	komplex_print("b=", b);
+	z = komplex_sub(a, b);
+	w = KOMPLEX(A - B);
+	komplex_print("a-b should   =", w);
+	komplex_print("a-b actually =", z);
+	if (komplex_equal(w, z))
+		printf("Test passed\n\n");
+	else
+		printf("Test failed\n\n");
 
 	printf("testing komplex_div...\n");
 	komplex_print("a=", a);

@@ -10,7 +10,13 @@
 #ifndef EPS
 #define EPS 1e-6
 #endif
+
 const komplex komplex_I = { 0, 1 };
+
+
+void komplex_print(char* s, komplex z) {
+	printf("%s %g + %g i", s, z.re, z.im)
+}
 
 
 void komplex_set(komplex* z, double x, double y) {
@@ -44,11 +50,6 @@ komplex komplex_sub(komplex a, komplex b) {
 }
 
 
-komplex komplex_conjugate(komplex z) {
-	komplex result = {z.re = z.re, z.im = -z.im};
-	return result;
-}
-
 int double_equal(double a, double b) {
 	if (fabs(a - b) < TAU)
 		return 1;
@@ -58,14 +59,10 @@ int double_equal(double a, double b) {
 		return 0;
 }
 
+
 int komplex_equal(komplex a, komplex b ) {
 	int result = double_equal(a.re, b.re) && double_equal(a.im, b.im);
 	return result;
-}
-
-
-void komplex_print(char* s, komplex z) {
-	printf("%s %g + i%g", s, z.re, z.im);
 }
 
 
@@ -94,9 +91,44 @@ komplex komplex_div(komplex a, komplex b) {
 }
 
 
+komplex komplex_conjugate(komplex z) {
+	komplex result = {z.re = z.re, z.im = -z.im};
+	return result;
+}
+
+
+komplex komplex_abs(komplez z) {
+	abs = sqrt(pow(z.re, 2) + pow(z.im, 2));
+	return abs;
+}
+
+
 komplex komplex_exp(komplex a) {
 	komplex z;
 	z.re = cos(a.im) * exp(a.re);
 	z.im = sin(a.im) * exp(a.re);
 	return z;
+}
+
+
+komplex komplex_sin(komplex z) {
+	komplex a;
+	a.re = sin(z.re) * cosh(z.im);
+	a.im = cos(z.re) * sinh(z.im);
+	return a;
+}
+
+
+komplex komplex_cos(komplex z) {
+	komplex a;
+	a.re = cos(z.re) * cosh(z.im);
+	a.im = - sin(z.re) * sinh(z.im);
+	return a;
+}
+
+
+komplex komplex_sqrt(komplex z) {
+	r = komplex_abs(z);
+	sqrt_z = sqrt(r) * (z + r) / komplex_abs(z + r);
+	return sqrt_z;
 }
