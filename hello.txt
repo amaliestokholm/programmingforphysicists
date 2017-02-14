@@ -1,0 +1,232 @@
+How many sections in man?
+9
+
+Suppose you need to type 'basename'. Which characters do you need to type before bash completion can complete
+your typing?
+basen -- enough so it is uniquely defined
+
+If you need to type 'mkdir --parent' How many characters?
+mkdi --p
+
+How do you create a folder with a subfolder?
+mkdir --parent prog/hello
+
+Which option instruct rm to ask the user for confirmation before every removal?
+rm -i
+
+Which option makes rm remove a folder with all subfolders?
+rm -r
+
+Which unix command lists the files in a directory in one column sorted by modification time with newest last?
+ls -lt
+
+What do ., .. and ~ mean in the context of the unix file utilities?
+
+Where will the command without any
+tilde : home directory (home/user)
+. : current folder
+.. : parent folder
+
+Where will cd with no arguements lead you?
+home
+
+What is your home directory?
+~
+home/user
+the parent of the parent
+the oldest ancestor
+
+How do you search for a keyword in manual pages?
+man -k keyword
+
+You can do type-generic math with tgmath.h instead of cosl (long) or cosf (float)
+If you use operators between two numbers of different type, C promotes the simplest to the more complex, e.g. int + float = float + float, float + complex = complex + complex.
+
+What is the main function?
+The main function is called by the operating system when the program runs. The main function then calls the other functions in the program.
+
+What is compilation and linking (of a C-program)? What is source code, object code, executable code?
+Source code is the text within .c files, and it is written by a human. Object code is compiled source code, and it contains instructions that a computer can understand but is difficult for a human to read. Executable code is a complete program consisting of the object code and linked to the necessary library functions. It can be run directly by an operating system. 
+
+How can you compile and link a C-program which is wholly contained in one file, say hello.c? How do you run the resulting executable code?
+The command of compiling and linking a hello.c with the math library is: gcc hello.c -o hello -lm
+The resulting executable code can now run if you type: ./hello
+
+How do you supply the compiler with the description of the printf function? Why do you need to do this? How do you link the printf function?
+If you #include <stdio.h>, then the preprocessor replaces the line with the text of the file stdio.h, which declares printf. Otherwise you can't use printf.
+
+What is stdio.h? Why angle-brackets in #include<stdio.h>? Hint: C preprocessor: including files.
+stdio.h is contains EXIT_SUCCESS and EXIT_FAILURE.
+Looks for the file in the system directory and NOT in the current directory.
+
+How can you get the description of the C standard library function printf? Hint: there is also a utility printf in a POSIX system.
+
+
+What are the built-in data types for numbers in the C-language?
+integers, float, doubles, long doubles
+
+What is the result of the operation 1/2 in C?
+0
+
+Can a C-compiler work with an undeclared variable? An undeclared function? Can a variable hold values of different types in the C-language?
+No
+
+In order to use C mathematical functions, do you need to include any header files? Link any library? Hint: man sin.
+
+What is tgmath.h? If you use tgmath.h do you need to link any library?
+Type generic math 
+
+What is the pow function? Is there a complex cpow function in your system? Hint: man -k cpow
+^
+
+What is the option that instructs the gcc compiler to print out all warnings? 
+Hint: gcc --help=warnings | grep 'all.warnings'
+-Wall 
+
+Name the comparison operators in C.
+Equal to ==
+Not equal to !=
+Greater than >
+Less than <
+Greater or equal to >=
+Less than or equal to <=
+
+Make files gets all the source code, compile it and builds the project. They work on any POSIX systems. Makefiles is a description of a project. It could be big libraries or programs but it could also be smaller projects.
+Autoconfig automatically builds makefiles for you, but we will not do that for this course. 
+
+Rewrite this piece of code, (a>b?a:b), using the if statement.
+if (a > b) {
+	result = a;
+} else {
+	result = b;
+}
+
+What is your shell? 
+Hints: try echo $0, echo $SHELL, ps --pid "$$".
+bash
+
+If you use mathematical functions from complex.h, do you need to link your program with -lm option? 
+Hint: man complex|grep '\-lm'.
+yes
+
+What will the following piece of code print?
+int i=1; printf("%i\n",i++); printf("%i\n",++i);
+It will print 1, 3, because first it will print i=1, then silently add 1. In the next printf call it will first incriment i with 1 and then print it, making i=3.
+
+How about
+int i=1; printf("%i %i\n",i++,++i);
+Hint: compile with -Wall.
+It works but it gives the warning stating 'operation on 'i' may be undefined'. The compiler chooses whether it will calculate the first or the second argument first, which ofcause makes a difference. 
+
+
+Rewrite the loop while(condition)body using the for loop.
+for (condition){
+	body;
+}
+Rewrite the loop for(init;cond;inc)body using the while loop.
+init
+while (cond) {
+	body;
+	inc;
+}
+Rewrite the loop do body while(condition); using the for loop.
+for (condition) {
+	do stuff;
+}
+
+Is this a valid C-code?
+if(0) printf("0 is true\n");
+else  printf("0 is false\n");
+if(7) printf("7 is true\n");
+else  printf("7 is false\n");
+Hint: Wikipedia → C syntax → Selection statements.
+It is valid in the sense that it does not crash. However, if(0) will always return the 'else' statement (false), while if(not 0) will always return the 'if' statement (true).
+
+Does C have a boolean (that is having one of two values, "true" or "false") type? 
+Hint: Wikipedia → Boolean data type →C.
+C does not provide any Boolean type, but Boolean values are represented by integers, false being 0 and true being everything else. 
+Standard C (since C00) provides a boolean type called _Bool
+
+How are arguments passed to functions in C: by-value or by-reference? And what does that mean? 
+Hint: C syntax → argument passing.
+In C, arguments are passed to functions by value in contrast to many other languages that pass variables by reference. This means that the function receives a copy of the values in the variable and thus the original values are not touched. However, one should take the memory use into account. 
+The caller pass the adress to the variable or it is pointer to it. 
+
+If double x=1.23, what is *(&x)?
+& is adress-of operator. so *(&x) points at the adress of x, which is 1.23.
+
+What is NULL? Hint: null pointer.
+NULL is the value for a null pointer, which indicates that the pointer does not refer to a valid object. It simply points at 'nothing'. 
+
+What happens to variables declared inside a function when the function exits (returns)?
+As the varibles are only visible inside the function (inside the function scope), it gets deleted when the function exits.
+
+What is a static variable? Hint: static variable.
+A static variable is a variable that is defined for the entire run of the program and thus is allocated statically. 
+C manages memory statically, automatically or dynamically. Static variables are allocated in main memory along with the executable code. Automatic-duration variables are allocated on the stack and comes and goes as the functions are called and return. Dynamic memory allocation is more flexible and uses (malloc and free).
+
+What will the following three programs print out and why?
+#include<stdio.h>
+void f(int i){i=0;}
+int main(){
+	int i=1; f(i); printf("i=%i\n",i);
+	return 0; }
+
+We have a function f that returns nothing and sets i=0. Inside main, i=1. However, the value in the function is not returned and is just deleted when the function exits. This program prints i=1. 
+
+
+#include<stdio.h>
+void f(int* i){*i=0;}
+int main(){
+	int i=1; f(&i); printf("i=%i\n",i);
+	return 0; }
+Here the function is given the adress-of i as an argument. It changes the pointed-to data to 0. This program prints i=0.
+
+
+#include<stdio.h>
+void f(int* i){i=NULL;}
+int main(){
+	int i=1; f(&i); printf("i=%i\n",i);
+	return 0; }
+
+Here the function does not change the pointed-to data, and thus the program prints i=1.
+
+If you pass an array to a function with the signature void f(double a[]) – what is actually passed to the function:
+a. the copy of the array?
+b. the pointer to the first element?
+c. the copy of the pointer to the first element?
+d. something else?
+Hint: C syntax → argument passing → array parameters.
+A function parameter declared with an array type is treated like one declared to be a pointer.
+However, arrays in C do not know their sizes, and thus it only points to the first element.
+
+When the function with the signature void f(double a[]) gets the array as parameter – can it figure out the size of the array?
+No. 
+
+At which stage—compilation or execution of the program—is the memory for the following arrays allocated? And which of these arrays "know" their sizes in the scope where they are declared?
+int a[] = {0,1,2,3,4};
+int b[5];
+int n = (argc>1 ? atoi(argv[1]):5); /* get n from the argument to the program */
+int c[n];
+int *d=(int*)malloc(5*sizeof(int));
+
+
+
+If you declare an array as int a[5]; and then try a[7]=1; what will happen? Hint: Segmentation fault / causes.
+
+
+If you declare an i) static, ii) variable-length, iii) dynamic array inside a function, can the function return it?
+What will the following C-program print?
+#include<stdio.h>
+int i=2; /* file scope */
+void f(){printf("i=%i\n",i);}
+int main(){
+	int i=1; /* function scope */
+	{
+		int i=0; /* block scope */
+		printf("i=%i\n",i);
+	}
+	printf("i=%i\n",i);
+	f();
+	return 0; }
+

@@ -1,0 +1,46 @@
+\documentclass[article,oneside,a4paper,11pt]{memoir}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[final]{microtype}
+\usepackage{url}
+
+% Brug libertine til sans serif, fordi den passer godt sammen med
+% brødteksten, der er Palatino, der igen loades med old style numerals
+% og sættes til at have en større linjeafstand. Vælg desuden en
+% teletype, der passer til Palatino, og den hedder txtt. Brug også
+% smukke "wingdings"-lignende tegn med fourier-orns og fx stambrøker
+% og mindre bullet points med textcomp.
+\usepackage{libertine}
+\usepackage[osf]{mathpazo}
+\renewcommand\ttdefault{txtt}
+\usepackage{fourier-orns}
+\usepackage{textcomp}
+\linespread{1.06}
+
+% Margins (with help from Steffen Videbæk)
+\setlxvchars
+\settypeblocksize{*}{1.2\lxvchars}{1.6181}
+\setulmargins{*}{*}{1.6181}
+\setlrmargins{*}{*}{1}
+\checkandfixthelayout
+
+
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent
+{\center\sffamily
+  {\large Programming for Physicists} \\[6pt]
+  {\large \itshape Amalie Stokholm} \\
+    {\large \itshape \today} \\\vfill
+  {\large \bfseries Notes} \par\vfill
+}
+\begin{itemize}
+\item 
+\end{itemize}
+
+
+
+\end{document}
