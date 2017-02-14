@@ -82,6 +82,6 @@ Test passed
 Testing komplex_sqrt...
 a= 0 + 2 i
 sqrt(a) should   = 1 + 1 i
-sqrt(a) actually = 0.816497 + 1.1547 i
-Test failed
+sqrt(a) actually = 1 + 1 i
+Test passed
 

@@ -130,11 +130,12 @@ komplex komplex_cos(komplex z) {
 
 
 komplex komplex_sqrt(komplex z) {
-	komplex r;
-	komplex sqrt_z;
-	r = komplex_abs(z);
-	r.re = sqrt(r.re);
-	komplex zr = komplex_add(z, r);
-	sqrt_z = komplex_mul(r, komplex_div(zr, komplex_abs(zr)));
+	double r, theta;
+	komplex w, sqrt_z;
+	theta = atan(z.im / z.re) / 2;
+	w = komplex_abs(z);
+       	r = sqrt(w.re);
+	sqrt_z.re = r * cos(theta);
+	sqrt_z.im = r * sin(theta);
 	return sqrt_z;
 }
