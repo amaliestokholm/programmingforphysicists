@@ -1,0 +1,23 @@
+Hello World
+Zero
+Seven
+One
+While: max_int = 2147483647
+For: max_int = 2147483647
+dowhile: max_int = 2147483647
+While: min_int = -2147483648
+For: min_int = -2147483648
+dowhile: min_int = -2147483648
+while: epsilon = 1.19209e-07, flt_epsilon = 1.19209e-07
+while: epsilon = 2.22045e-16, dbl_epsilon = 2.22045e-16
+while: epsilon = 1.0842e-19, dbl_epsilon = 1.0842e-19
+for: epsilon = 1.19209e-07, flt_epsilon = 1.19209e-07
+for: epsilon = 2.22045e-16, dbl_epsilon = 2.22045e-16
+for: epsilon = 1.0842e-19, dbl_epsilon = 1.0842e-19
+dowhile: epsilon = 1.19209e-07, flt_epsilon = 1.19209e-07
+dowhile: epsilon = 2.22045e-16, dbl_epsilon = 2.22045e-16
+dowhile: epsilon = 1.0842e-19, dbl_epsilon = 1.0842e-19
+Sum_up: 15.4252
+Sum_down: 30.7105
+eq1 = 1
+eq2 = 0
