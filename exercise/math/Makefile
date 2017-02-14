@@ -1,7 +1,7 @@
 # make knows a lot. try 'make -p'
 CFLAGS = -Wall -std=gnu99 # print out ALL warnings
 LDLIBS = -lm  # links to math
-SOURCES = math.c significantdigits.c
+SOURCES = math.c 
 OBJECTS = $(SOURCES: .c=.o)  # change the postfix from .c to .o
 EXECUTEABLE = math
 
