@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <math.h>
-#include<complex.h>
+#include <complex.h>
 
 
 int main() {
@@ -15,12 +15,12 @@ int main() {
 	// Play around with complex numbers
 	double complex z = -2;
 	double complex sz = csqrt(z);
-	printf("csqrt(%g+i%g) is %g+i%g\n", creal(z), cimag(z), creal(sz), cimag(sz));
+	printf("csqrt(%g+%gi) is %g+%gi\n", creal(z), cimag(z), creal(sz), cimag(sz));
 	double complex ce = cexp(I);
-	printf("exp(%g+i%g) is %g+i%g\n", creal(I), cimag(I), creal(ce), cimag(ce));
+	printf("exp(%g+%gi) is %g+%gi\n", creal(I), cimag(I), creal(ce), cimag(ce));
 	double complex cpi = cexp(I * M_PI);
-	printf("exp(%g+i%g) is %g+i%g\n", creal(I * M_PI), cimag(I * M_PI), creal(cpi), cimag(cpi));
-	double complex ie = pow(I, M_E); 
-	printf("i^e is %g+i%g\n", creal(ie), cimag(ie));
+	printf("exp(%g+%gi) is %g+%gi\n", creal(I * M_PI), cimag(I * M_PI), creal(cpi), cimag(cpi));
+	double complex ie = cpow(I, M_E); 
+	printf("i^e is %g+%gi\n", creal(ie), cimag(ie));
 return 0;
 }

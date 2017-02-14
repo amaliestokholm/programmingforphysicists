@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<math.h>
-int main(){
+int significantdigits(){
 	float f = .1111111111111111111111111111;
 	double d = .1111111111111111111111111111;
 	long double l = .1111111111111111111111111111L;
