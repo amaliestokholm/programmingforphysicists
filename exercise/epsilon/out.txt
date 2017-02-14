@@ -21,6 +21,5 @@ Sum_up: 15.4252
 Sum_down: 30.7105
 a=1, b=1
 Are they equal? Answer=true
-eq2 = 0
 a=1, b=2
 Are they equal? Answer=false
