@@ -1,6 +1,9 @@
 How many sections in man?
 9
 
+How do you search your man-pages for a given keyword?
+man man | grep -B1 (if you want to see the line before kw) -A1 (if you want to see line after kw) keyword
+
 Suppose you need to type 'basename'. Which characters do you need to type before bash completion can complete
 your typing?
 basen -- enough so it is uniquely defined
@@ -21,8 +24,6 @@ Which unix command lists the files in a directory in one column sorted by modifi
 ls -lt
 
 What do ., .. and ~ mean in the context of the unix file utilities?
-
-Where will the command without any
 tilde : home directory (home/user)
 . : current folder
 .. : parent folder
@@ -46,10 +47,11 @@ What is the main function?
 The main function is called by the operating system when the program runs. The main function then calls the other functions in the program.
 
 What is compilation and linking (of a C-program)? What is source code, object code, executable code?
+Compilation is processing the source code and creating the object code. Linking creates a single executeable file from one or multiple object files. 
 Source code is the text within .c files, and it is written by a human. Object code is compiled source code, and it contains instructions that a computer can understand but is difficult for a human to read. Executable code is a complete program consisting of the object code and linked to the necessary library functions. It can be run directly by an operating system. 
 
 How can you compile and link a C-program which is wholly contained in one file, say hello.c? How do you run the resulting executable code?
-The command of compiling and linking a hello.c with the math library is: gcc hello.c -o hello -lm
+The command of compiling and linking a hello.c with the math library is: gcc hello.c -o hello 
 The resulting executable code can now run if you type: ./hello
 
 How do you supply the compiler with the description of the printf function? Why do you need to do this? How do you link the printf function?
@@ -57,27 +59,29 @@ If you #include <stdio.h>, then the preprocessor replaces the line with the text
 
 What is stdio.h? Why angle-brackets in #include<stdio.h>? Hint: C preprocessor: including files.
 stdio.h is contains EXIT_SUCCESS and EXIT_FAILURE.
+The angle brackets, then the file is searched for in the standard compiler include paths.
 Looks for the file in the system directory and NOT in the current directory.
 
 How can you get the description of the C standard library function printf? Hint: there is also a utility printf in a POSIX system.
-
+man 3 printf. Section 3p is the POSIX-manual, while section 3 is the libc-manual. Section 2 is the system-manual. If you don't declare which section you want to see, then you get 3p before 3 and 3 before 2.
 
 What are the built-in data types for numbers in the C-language?
 integers, float, doubles, long doubles
 
 What is the result of the operation 1/2 in C?
-0
+0 if both are ints.
 
 Can a C-compiler work with an undeclared variable? An undeclared function? Can a variable hold values of different types in the C-language?
-No
+No, not an undeclared variable. But you can call a function with undeclared function. But then the function needs to be defined later in the file or in another object file. It's a bad idea, though.
 
 In order to use C mathematical functions, do you need to include any header files? Link any library? Hint: man sin.
+You need to include math.h
 
 What is tgmath.h? If you use tgmath.h do you need to link any library?
-Type generic math 
+Type generic math, and it needs math.h and complex.h in order to work. 
 
 What is the pow function? Is there a complex cpow function in your system? Hint: man -k cpow
-^
+^, and there is three cpow functions in my system: cpow, cpowf, and cpowl.
 
 What is the option that instructs the gcc compiler to print out all warnings? 
 Hint: gcc --help=warnings | grep 'all.warnings'

@@ -1,11 +1,14 @@
 #include <stdio.h>
+#include <math.h>
+#include <assert.h>
 #include "nvector.h"
 
 nvector* nvector_alloc(int n){
 	nvector* v = malloc(sizeof(nvector));
 	(*v).size = n;
-	(*v).data = malloc(n*sizeof(double));
-	if( v==NULL ) fprintf(stderr,"error in nvector_alloc\n");
+	(*v).data = malloc(n * sizeof(double));
+	if( v==NULL )
+	       	fprintf(stderr,"Error in nvector_alloc\n");
 	return v;
 }
 
