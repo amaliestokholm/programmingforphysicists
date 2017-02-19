@@ -1,9 +1,9 @@
 # make knows a lot. try 'make -p'
 CFLAGS = -Wall -std=gnu99 # print out ALL warnings
 LDLIBS = -lm  # links to math
-SOURCES = math.c 
+SOURCES = main.c nvector.c 
 OBJECTS = $(SOURCES: .c=.o)  # change the postfix from .c to .o
-EXECUTEABLE = math
+EXECUTEABLE = nvector
 
 .PHONEY: out.txt clean  # To make sure that default is not a file, but an action.
 

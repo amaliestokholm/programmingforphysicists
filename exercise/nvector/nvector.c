@@ -33,8 +33,8 @@ double nvector_get(nvector* v, int i){
 double nvector_dot_product(nvector* u, nvector* v){
 	assert(v->size == u->size);
 	double sum;
-	for (int i = 0, i < n; i++){
-		double c = nvector_get(a, i) * nvector_get(b, i);
+	for (int i = 0; i < v->size; i++){
+		double c = nvector_get(u, i) * nvector_get(v, i);
 		sum += c;
 	}
 	return sum;
@@ -42,14 +42,15 @@ double nvector_dot_product(nvector* u, nvector* v){
 
 void nvector_print(char* s, nvector* v){
 	printf("%s", s);
-	for (int i = 0, i < v->size; i++)
+	for (int i = 0; i < v->size; i++)
 		printf("%g", v->data[i]);
 	printf("\n");
 }
 
 void nvector_set_zero(nvector* v){
-	for (int i = 0, i < v->size; i++)
-		nvector_set(v, i, 0)
+	for (int i = 0; i < v->size; i++){
+		nvector_set(v, i, 0.0);
+	}
 }
 
 int double_equal(double a, double b){
@@ -63,31 +64,32 @@ int double_equal(double a, double b){
 
 int nvector_equal(nvector* a, nvector* b){
 	assert(a->size == b->size);
-	for (int i = 0, i < v->size; i++)
+	for (int i = 0; i < a->size; i++){
 		if (!double_equal(a->data[i], b->data[i]))
 			return 0;
+	}
 	return 1;
 }
 
 void nvector_add(nvector* a, nvector* b){
 	assert(a->size == b->size);
-	for (int i = 0, i < a->size; i++){
-		double c = nvector_get(a, i) + nvector(b, i);
-		nvector_set(a, i, c)
+	for (int i = 0; i < a->size; i++){
+		double c = nvector_get(a, i) + nvector_get(b, i);
+		nvector_set(a, i, c);
 	}
 }
 
 void nvector_sub(nvector* a, nvector* b){
 	assert(a->size == b->size);
-	for (int i = 0, i < a->size; i++){
-		double c = nvector_get(a, i) - nvector(b, i);
-		nvector_set(a, i, c)
+	for (int i = 0; i < a->size; i++){
+		double c = nvector_get(a, i) - nvector_get(b, i);
+		nvector_set(a, i, c);
 	}
 }
 
 void nvector_scale(nvector* a, double x){
-	for (int i = 0, i < a->size; i++){
+	for (int i = 0; i < a->size; i++){
 		double c = nvector_get(a, i) * x;
-		nvector_set(a, i, c)
+		nvector_set(a, i, c);
 	}
 }
