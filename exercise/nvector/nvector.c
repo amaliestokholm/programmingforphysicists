@@ -32,10 +32,12 @@ double nvector_get(nvector* v, int i){
 
 double nvector_dot_product(nvector* u, nvector* v){
 	assert(v->size == u->size);
-	int n = v->size;
-	nvector* w = nvector_alloc(n);
-	for (int i = 0, i < n; i++)
-		nvector_set(w, i, u->data[i]*v->data[i]);	
+	double sum;
+	for (int i = 0, i < n; i++){
+		double c = nvector_get(a, i) * nvector_get(b, i);
+		sum += c;
+	}
+	return sum;
 }
 
 void nvector_print(char* s, nvector* v){
