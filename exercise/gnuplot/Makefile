@@ -1,21 +1,42 @@
 # make knows a lot. try 'make -p'
 CFLAGS = -Wall -std=gnu99 # print out ALL warnings
 LDLIBS = -lm  # links to math
-SCIPT = log.gpi
+SCRIPT = log.gpi
+FORMAT = pdf
+PLOTTER = gnuplot
 
 .PHONEY: all out.txt clean  # To make sure that default is not a file, but an action.
 
-all: main-stdio test.io.out.txt
+all: main-stdio main-cmdline plot.$(FORMAT)
+
+plot.$(FORMAT) : out.io.txt out.cmd.txt Makefile
+	echo 'set term $(FORMAT)' >> $(SCRIPT)
+	echo 'set output "$@"' >> $(SCRIPT)
+	echo 'set key out' >> $(SCRIPT)
+	echo 'set xlabel "x"' >> $(SCRIPT)
+	echo 'set ylabel "y"' >> $(SCRIPT)
+	echo 'plot \' >> $(SCRIPT)
+	echo '"$(word 1,$^)" with points title "stdio" \' >> $(SCRIPT)
+	echo ',"$(word 2,$^)" with points title "cmdline" \' >> $(SCRIPT)
+	echo ',sin(x) with lines \' >> $(SCRIPT)
+	echo ',cos(x) with lines' >> $(SCRIPT)
+	$(PLOTTER) $(SCRIPT)
 
 main-stdio : main-stdio.c
 	cc $^ -o $@ $(CFLAGS) $(LDLIBS)
 
-test.io.out.txt: in.dat main-stdio
+main-cmdline : main-cmdline.c
+	cc $^ -o $@ $(CFLAGS) $(LDLIBS)
+
+out.io.txt: in.dat main-stdio
 	./$(word 2, $^) < $< > $@
+
+out.cmd.txt: in.dat main-cmdline
+	./$(word 2, $^) `cat $<` > $@
 
 in.dat : Makefile
 	cat /dev/null > $@
-	for x in `seq 0 0.5 2`; do echo $$x >> $@; done
+	for x in `seq 0 0.2 5`; do echo $$x >> $@; done
 
 
 # clean removes all temporary files, only the original files remain.
