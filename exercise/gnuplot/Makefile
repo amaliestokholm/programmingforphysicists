@@ -1,19 +1,24 @@
 # make knows a lot. try 'make -p'
 CFLAGS = -Wall -std=gnu99 # print out ALL warnings
 LDLIBS = -lm  # links to math
-SOURCES = main-stdio.c 
-OBJECTS = $(SOURCES: .c=.o)  # change the postfix from .c to .o
-EXECUTEABLE = main-stdio
+SCIPT = log.gpi
 
-.PHONEY: out.txt clean  # To make sure that default is not a file, but an action.
+.PHONEY: all out.txt clean  # To make sure that default is not a file, but an action.
 
-out.txt : $(SOURCES) $(EXECUTEABLE)
-	./$(EXECUTEABLE) > $@  # whatever main prints to the terminal is also send to out.txt
+all: main-stdio test.io.out.txt
 
-$(EXECUTEABLE): $(OBJECTS)
-	cc $(OBJECTS) -o $@ $(LDLIBS)
+main-stdio : main-stdio.c
+	cc $^ -o $@ $(CFLAGS) $(LDLIBS)
+
+test.io.out.txt: in.dat main-stdio
+	./$(word 2, $^) < $< > $@
+
+in.dat : Makefile
+	cat /dev/null > $@
+	for x in `seq 0 0.5 2`; do echo $$x >> $@; done
 
 
 # clean removes all temporary files, only the original files remain.
 clean : 
-	rm --force *.o *~ out.txt
+	find ./ -type f -executable -delete
+	$(RM) *.dat $(SCRIPT) *.svg *.png *.pdf log*
