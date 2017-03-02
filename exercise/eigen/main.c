@@ -10,7 +10,7 @@ int main() {
 
 	// Create A and b
 	b = gsl_vector_alloc(3);
-	A = gsl_matrix_allow(3, 3);
+	A = gsl_matrix_alloc(3, 3);
 
 	gsl_vector_set(b, 0, 6.23);
 	gsl_vector_set(b, 1, 5.37);
@@ -25,6 +25,26 @@ int main() {
 	gls_matrix_set(A, 0, 2, 5.86);
 	gls_matrix_set(A, 1, 2, -3.89);
 	gls_matrix_set(A, 2, 2, 0.19);
+
+	printf("b is: \n");
+	gls_vector_fprintf(stdout, b, "%f");
+	printf("A is: \n");
+	gls_matrix_fprintf(stdout, A, "%f");
+
+
+
+
+
+
+
+
+
+	// Free memory
+	gls_vector_free(b);
+	gls_matrix_free(A);
+
+	return 0;
+}
 
 
 
