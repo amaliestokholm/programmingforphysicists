@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include <gsl_vector.h>
-#include <gls_matrix.h>
-#include <gls_eigen.h>
+#include <gsl/gsl_vector.h>
+#include <gls/gls_matrix.h>
+#include <gls/gls_eigen.h>
 
 int main() {
 	// Declare pointer variables for Ax=b
