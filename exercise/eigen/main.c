@@ -4,6 +4,11 @@
 #include <gsl/gsl_permutation.h>
 #include <gsl/gsl_eigen.h>
 const double pi = 3.14159265358979323844;
+
+double coulomb(double x) {
+	return (-1 / x);
+}
+
 int main() {
 	// part a
 	// Declare pointer variables for Ax=b
@@ -75,7 +80,14 @@ int main() {
 		gsl_vector_set(xvec, i, start + (i + 1) * step);
 	
 	// Add potential
-
+	for (int i =0; i < n; i++) {
+		fprintf(stderr,"%d", i);
+		double Hii = gsl_matrix_get(H, i, i);
+		double xi = gsl_vector_get(xvec, i);
+		double Vxi = coulomb(xi);
+		fprintf(stderr, "%g", Vxi);
+		gsl_matrix_set(H, i, i, Hii + Vxi);
+	}
 
 	// Diagonalize
 	gsl_eigen_symmv_workspace *w =  gsl_eigen_symmv_alloc(n);
@@ -108,6 +120,7 @@ int main() {
 	gsl_vector_free(eval);
 	gsl_matrix_free(evec);
 	gsl_vector_free(xvec);
+	gsl_eigen_symmv_free(w);
 
 	return 0;
 }

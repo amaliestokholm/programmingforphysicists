@@ -10,14 +10,12 @@ SCRIPT = log.gpi
 FORMAT = pdf
 PLOTTER = gnuplot
 
-.PHONEY: plot.$(FORMAT) clean data log # To make sure that default is not a file, but an action.
+.PHONEY: all plot.$(FORMAT) clean # To make sure that default is not a file, but an action.
 
-all : out.txt data log plot.$(FORMAT)
+all : plot.$(FORMAT) data
 
-data log : main;
-	./$< 1> data 2> errlog  # send standard output into 'data' and standard error into 'errlog'
 
-plot.$(FORMAT) : Makefile
+plot.$(FORMAT) : data Makefile
 	echo 'set term $(FORMAT)' >> $(SCRIPT)
 	echo 'set title "Eigen-functions"' >> $(SCRIPT)
 	echo 'set output "$@"' >> $(SCRIPT)
@@ -25,17 +23,16 @@ plot.$(FORMAT) : Makefile
 	echo 'set xlabel "x"' >> $(SCRIPT)
 	echo 'set ylabel "u(x)"' >> $(SCRIPT)
 	echo 'plot \' >> $(SCRIPT)
-	echo ' "data" using "x":"u0" with lines title "u_0" \' >> $(SCRIPT)
-	echo ',"data" using "x":"u1" with lines title "u_1" \' >> $(SCRIPT)
-	echo ',"data" using "x":"u2" with lines title "u_2"' >> $(SCRIPT)
+	echo ' "$(word 1,$^)" using "x":"u0" with lines title "u_0" \' >> $(SCRIPT)
+	echo ',"$(word 1,$^)" using "x":"u1" with lines title "u_1" \' >> $(SCRIPT)
+	echo ',"$(word 1,$^)" using "x":"u2" with lines title "u_2"' >> $(SCRIPT)
 	$(PLOTTER) $(SCRIPT)
 
-out.txt : $(SOURCES) $(EXECUTEABLE)
-	./$(EXECUTEABLE) > $@  # whatever main prints to the terminal is also send to out.txt
+data : $(EXECUTEABLE)
+	./$< >$(word 1, $@)  # send standard output into 'data'
 
 $(EXECUTEABLE): $(OBJECTS)
-	cc $(OBJECTS) -o $@ $(LDLIBS)
-
+	cc $(OBJECTS) -o $@ $(CFLAGS) $(LDLIBS)
 
 # clean removes all temporary files, only the original files remain.
 clean : 
