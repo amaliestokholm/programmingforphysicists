@@ -29,10 +29,10 @@ int main() {
 	gsl_matrix_set(A, 1, 2, -3.89);
 	gsl_matrix_set(A, 2, 2, 0.19);
 
-	printf("b is: \n");
-	gsl_vector_fprintf(stdout, b, "%f");
-	printf("A is: \n");
-	gsl_matrix_fprintf(stdout, A, "%f");
+	fprintf(stderr, "b is: \n");
+	gsl_vector_fprintf(stderr, b, "%f");
+	fprintf(stderr, "A is: \n");
+	gsl_matrix_fprintf(stderr, A, "%f");
 
 	// Solve the linear system
 	x = gsl_vector_alloc(3);
@@ -42,8 +42,8 @@ int main() {
 	gsl_linalg_LU_decomp(A, p, &m);
 	gsl_linalg_LU_solve(A, p, b, x);
 
-	printf("x is then found to be:\n");
-	gsl_vector_fprintf(stdout, x, "%f");
+	fprintf(stderr, "x is then found to be:\n");
+	gsl_vector_fprintf(stderr, x, "%f");
 
 
 	// Free memory
@@ -56,9 +56,10 @@ int main() {
 	// part b
 	// Declare pointer variables
 	int n = 20;
+	double start = 0, end = 30;
+	double step = (end - start) / (n + 1);
 	gsl_matrix *H = gsl_matrix_calloc(n, n);
 	
-
 	// Build the Hamiltonian
 	for(int i=0; i < n-1; i++) {
 		gsl_matrix_set(H, i, i, -2);
@@ -69,28 +70,44 @@ int main() {
 	double s = 1.0 / (n+1);
 	gsl_matrix_scale(H, -1/s/s);
 
-	// Diagonalize
-	gsl_eigen_symmv_workspace* w =  gsl_eigen_symmv_alloc(n);
-	gsl_vector* eval = gsl_vector_alloc(n);
-	gsl_matrix* evec = gsl_matrix_calloc(n, n);
-	gsl_eigen_symmv(H, eval, evec, w);
+	gsl_vector *xvec = gsl_vector_alloc(n);
+	for (int i = 0; i < n; i++)
+		gsl_vector_set(xvec, i, start + (i + 1) * step);
+	
+	// Add potential
 
+
+	// Diagonalize
+	gsl_eigen_symmv_workspace *w =  gsl_eigen_symmv_alloc(n);
+	gsl_vector *eval = gsl_vector_alloc(n);
+	gsl_matrix *evec = gsl_matrix_calloc(n, n);
+	gsl_eigen_symmv(H, eval, evec, w);
 	gsl_eigen_symmv_sort(eval, evec, GSL_EIGEN_SORT_VAL_ASC);
 
-	fprintf (stderr, "i   exact   calculated\n");
+	// Print the first eigenvalues
+	fprintf(stderr, "i   exact   calculated\n");
 	for (int k = 0; k < n/3; k++){
 		double exact = pi * pi * (k + 1) * (k + 1);
 		double calculated = gsl_vector_get(eval, k);
 		fprintf(stderr, "%i %g %g\n", k, exact, calculated);
 	}
+	// Print
+	printf("x u0 u1 u2\n");
+	printf("%f %f %f %f\n", start, 0., 0., 0.);
+	for (int i = 0; i < n; i++) {
+		double x = gsl_vector_get(xvec, i);
+		double u0 = gsl_matrix_get(evec, i, 0);
+		double u1 = gsl_matrix_get(evec, i, 1);
+		double u2 = gsl_matrix_get(evec, i, 2);
+		printf("%f %f %f %f\n", x, u0, u1, u2);
+	}
+	printf("%f %f %f %f\n", end, 0., 0., 0.);
 
 	// Free memory
 	gsl_matrix_free(H);
 	gsl_vector_free(eval);
 	gsl_matrix_free(evec);
+	gsl_vector_free(xvec);
 
 	return 0;
 }
-
-
-
