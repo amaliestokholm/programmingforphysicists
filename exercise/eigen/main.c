@@ -60,7 +60,7 @@ int main() {
 
 	// part b
 	// Declare pointer variables
-	int n = 20;
+	int n = 250;
 	double start = 0, end = 30;
 	double step = (end - start) / (n + 1);
 	gsl_matrix *H = gsl_matrix_calloc(n, n);
@@ -72,8 +72,7 @@ int main() {
 		gsl_matrix_set(H, i+1, i, 1);
 	}
 	gsl_matrix_set(H, n-1, n-1, -2);
-	double s = 1.0 / (n+1);
-	gsl_matrix_scale(H, -1/s/s);
+	gsl_matrix_scale(H, -1 / step / step);
 
 	gsl_vector *xvec = gsl_vector_alloc(n);
 	for (int i = 0; i < n; i++)
@@ -81,11 +80,11 @@ int main() {
 	
 	// Add potential
 	for (int i =0; i < n; i++) {
-		fprintf(stderr,"%d", i);
+		fprintf(stderr,"%i\n", i);
 		double Hii = gsl_matrix_get(H, i, i);
 		double xi = gsl_vector_get(xvec, i);
 		double Vxi = coulomb(xi);
-		fprintf(stderr, "%g", Vxi);
+		fprintf(stderr, "%g\n", Vxi);
 		gsl_matrix_set(H, i, i, Hii + Vxi);
 	}
 
