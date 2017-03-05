@@ -1,21 +1,35 @@
-# make knows a lot. try 'make -p'
-CFLAGS = -Wall -std=gnu99 # print out ALL warnings
-LDLIBS = -lm  # links to math
+CFLAGS = -Wall -std=gnu99 
+LDLIBS = -lm 
 CFLAGS += `gsl-config --cflags`
 LDLIBS += `gsl-config --libs`
-SOURCES = orbit.c 
-OBJECTS = $(SOURCES: .c=.o)  # change the postfix from .c to .o
-EXECUTEABLE = orbit
+SOURCES = orbit.c ydiff.c
+OBJECTS = $(SOURCES: .c=.o)
+EXECUTEABLE = orbit ydiff
+FORMAT = pdf
+PLOTTER = gnuplot
 
-.PHONEY: out.txt clean  # To make sure that default is not a file, but an action.
+.PHONEY: all plot.$(FORMAT) clean 
 
-out.txt : $(SOURCES) $(EXECUTEABLE)
-	./$(EXECUTEABLE) > $@  # whatever main prints to the terminal is also send to out.txt
+all : out_ydiff.txt out_orbit.txt  # plot.$(FORMAT) data
+
+plot.$(FORMAT) : out_orbit.txt Makefile
+	echo 'set term $(FORMAT)' >> $(SCRIPT)
+	echo 'set title "Orbital motion"' >> $(SCRIPT)
+	echo 'set output "$@"' >> $(SCRIPT)
+	echo 'set key out' >> $(SCRIPT)
+	echo 'set xlabel "x"' >> $(SCRIPT)
+	echo 'set ylabel "y"' >> $(SCRIPT)
+	$(PLOTTER) $(SCRIPT)
+
+out_ydiff.txt : ydiff 
+	./$< >$@  # send standard output into 'data'
+
+out_orbit.txt : orbit
+	./$< > $@
 
 $(EXECUTEABLE): $(OBJECTS)
-	cc $(OBJECTS) -o $@ $(LDLIBS)
+	cc $(OBJECTS) -o $@ $(CFLAGS) $(LDLIBS)
 
-
-# clean removes all temporary files, only the original files remain.
 clean : 
-	rm --force *.o *~ out.txt
+	find ./ -type f -executable -delete
+	$(RM) *.dat $(SCRIPT) *.svg *.png *.pdf log*
