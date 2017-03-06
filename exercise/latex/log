@@ -1,0 +1,10 @@
+set term pdf
+set title "Orbital motion"
+set output "plot.pdf"
+set key out
+set size ratio -1
+set grid
+set xlabel "x"
+set ylabel "y"
+plot \
+"out_error.txt" using "t":"y(t)" with lines notitle \
