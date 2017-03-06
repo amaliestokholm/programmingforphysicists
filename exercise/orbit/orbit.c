@@ -25,10 +25,10 @@ int main() {
 	gsl_odeiv2_driver *driver = gsl_odeiv2_driver_alloc_y_new(&sys, gsl_odeiv2_step_rkf45,
 			hstart, epsabs, epsrel);
 
-	double t=0, y[2] = {1, dudt};  // initial conditions
+	double t=0, u[2] = {1, dudt};  // initial conditions
 	for (double phi = 0; phi < phi_max; phi += delta_phi) {
-		gsl_odeiv2_driver_apply(driver, &t, phi, y);
-		printf("%g %g\n", phi, y[0]);
+		gsl_odeiv2_driver_apply(driver, &t, phi, u);
+		printf("%g %g\n", phi, u[0]);
 	}
 	gsl_odeiv2_driver_free(driver);
 	return 0;
