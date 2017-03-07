@@ -1,0 +1,9 @@
+set term pdf
+set title "Energies from the variational method"
+set output "plot.pdf"
+set key out
+set grid
+set xlabel "Alpha"
+set ylabel "Energy"
+plot \
+"out_integ.txt" using "a":"E(a)" with lines notitle \

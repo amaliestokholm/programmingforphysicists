@@ -8,19 +8,18 @@ PLOTTER = gnuplot
 
 .PHONEY: all plot.$(FORMAT) clean 
 
-all : out_lnsqrt.txt out_integ.txt #plot.$(FORMAT)
+all : out_lnsqrt.txt plot.$(FORMAT)
 
-plot.$(FORMAT) : out_error.txt Makefile
+plot.$(FORMAT) : out_integ.txt Makefile
 	echo 'set term $(FORMAT)' >> $(SCRIPT)
-	echo 'set title "Orbital motion"' >> $(SCRIPT)
+	echo 'set title "Energies from the variational method"' >> $(SCRIPT)
 	echo 'set output "$@"' >> $(SCRIPT)
 	echo 'set key out' >> $(SCRIPT)
-	echo 'set size ratio -1' >> $(SCRIPT)
 	echo 'set grid' >> $(SCRIPT)
-	echo 'set xlabel "x"' >> $(SCRIPT)
-	echo 'set ylabel "y"' >> $(SCRIPT)
+	echo 'set xlabel "Alpha"' >> $(SCRIPT)
+	echo 'set ylabel "Energy"' >> $(SCRIPT)
 	echo 'plot \' >> $(SCRIPT)
-	echo '"$(word 1, $^)" using "t":"y(t)" with lines notitle \' >> $(SCRIPT)
+	echo '"$(word 1, $^)" using "a":"E(a)" with lines notitle \' >> $(SCRIPT)
 	$(PLOTTER) $(SCRIPT)
 
 out_lnsqrt.txt : lnsqrt
