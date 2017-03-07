@@ -15,24 +15,28 @@ double trialtrial(double x, void * params) {
 }
 
 int main(void) {
-	double start = 0, end = 1;
 	double epsabs = 1e-6, epsrel = 1e-6;
-	double n = 1000;
+	double n = 1000, alpha = 1.0;
 	double psiHpsi, pHperror;
 	double psipsi, pperror;
-
 	gsl_integration_workspace * w = gsl_integration_workspace_alloc(n);
 	gsl_integration_workspace * q = gsl_integration_workspace_alloc(n);
 
 	gsl_function F;
 	F.function = &trialhamiltoniantrial;
-
-	gsl_integration_qagi(&F, start, end, epsabs, epsrel, n, w, &psiHpsi, &pHperror);
+	F.params = &alpha;
+	gsl_integration_qagi(&F, epsabs, epsrel, n, w, &psiHpsi, &pHperror);
 
 	gsl_function G;
 	G.function = &trialtrial;
-	gsl_integration_qagi(&G, start, end, epsabs, epsrel, n, q, &psipsi, &pperror);
+	G.params = &alpha;
+	gsl_integration_qagi(&G, epsabs, epsrel, n, q, &psipsi, &pperror);
 
 	gsl_integration_workspace_free(w);
 	gsl_integration_workspace_free(q);
+	
+	double E = psiHpsi / psipsi;
+	printf("E = %.g\n", E);
+
+	return 0;
 }

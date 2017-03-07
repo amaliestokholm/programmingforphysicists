@@ -24,4 +24,5 @@ int main(void) {
 	printf("Estimated error = %.12f\n", error);
 
 	gsl_integration_workspace_free(w);
+	return 0;
 }

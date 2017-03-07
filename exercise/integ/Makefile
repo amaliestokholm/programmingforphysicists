@@ -5,11 +5,10 @@ LDLIBS += `gsl-config --libs`
 FORMAT = pdf
 SCRIPT = log
 PLOTTER = gnuplot
-SOURCES = lnsqrt
 
 .PHONEY: all plot.$(FORMAT) clean 
 
-all : out_lnsqrt.txt  #plot.$(FORMAT)
+all : out_lnsqrt.txt out_integ.txt #plot.$(FORMAT)
 
 plot.$(FORMAT) : out_error.txt Makefile
 	echo 'set term $(FORMAT)' >> $(SCRIPT)
@@ -27,7 +26,13 @@ plot.$(FORMAT) : out_error.txt Makefile
 out_lnsqrt.txt : lnsqrt
 	./$^ > $@
 
+out_integ.txt : integ
+	./$^ > $@
+
 lnsqrt : lnsqrt.c
+	cc $^ -o $@ $(CFLAGS) $(LDLIBS)
+
+integ : integ.c
 	cc $^ -o $@ $(CFLAGS) $(LDLIBS)
 clean : 
 	find ./ -type f -executable -delete
