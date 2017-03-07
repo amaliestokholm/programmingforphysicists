@@ -22,15 +22,17 @@ int main(void) {
 	double psipsi, pperror;
 
 	gsl_integration_workspace * w = gsl_integration_workspace_alloc(n);
+	gsl_integration_workspace * q = gsl_integration_workspace_alloc(n);
 
 	gsl_function F;
-	F.function = &func;
+	F.function = &trialhamiltoniantrial;
 
-	gsl_integration_qagi(&F, start, end, epsabs, epsrel, n, w, &psiHpsi, &pHperror); 
-	gsl_integration_qagi(&F, start, end, epsabs, epsrel, n, w, &psipsi, &pperror);
+	gsl_integration_qagi(&F, start, end, epsabs, epsrel, n, w, &psiHpsi, &pHperror);
 
-	printf("Result = %.12f\n", result);
-	printf("Estimated error = %.12f\n", error);
+	gsl_function G;
+	G.function = &trialtrial;
+	gsl_integration_qagi(&G, start, end, epsabs, epsrel, n, q, &psipsi, &pperror);
 
 	gsl_integration_workspace_free(w);
+	gsl_integration_workspace_free(q);
 }
