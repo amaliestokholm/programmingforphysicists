@@ -16,7 +16,7 @@ double trialtrial(double x, void * params) {
 
 int main(void) {
 	double epsabs = 1e-6, epsrel = 1e-6;
-	double n = 1000, alpha_start = 0.5, alpha_max = 5.0, delta_alpha=0.5;
+	double n = 1000, alpha_start = 0.1, alpha_max = 5.0, delta_alpha=0.1;
 	double psiHpsi, pHperror;
 	double psipsi, pperror;
 	printf("a\tE(a)\n");
