@@ -1,0 +1,9 @@
+set term pdf
+set title "Least-squares fit to data"
+set output "plot.pdf"
+set key out
+set grid
+set xlabel "Time"
+set ylabel "Activity"
+plot \
+"out_leastsquares.txt" using "t":"y" with points notitle \

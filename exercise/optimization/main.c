@@ -1,14 +1,15 @@
-#include <stdio.c>
+#include <stdio.h>
+#include <math.h>
 #include <gsl/gsl_vector.h>
 #include <gsl/gsl_multimin.h>
 #include <assert.h>
 
-struct exp_data {int n; double *t, *y, *e;}
+struct exp_data {int n; double *t, *y, *e;};
 
 double deviation(const gsl_vector *x, void *params) {
-	double a = gsl_vector_get(x, 0);
-	double t = gsl_vector_get(x, 1);
-	double e = gsl_vector_get(x, 2);
+	double A = gsl_vector_get(x, 0);
+	double T = gsl_vector_get(x, 1);
+	double B = gsl_vector_get(x, 2);
 
 	struct exp_data *p = (struct exp_data*) params;
 
@@ -20,7 +21,8 @@ double deviation(const gsl_vector *x, void *params) {
 	double sum = 0;
 
 	for (int i = 0; i < n; i++) {
-		sum += pow(f(t[i]) - y[i], 2) / pow(e[i], 2);
+		double f = A * exp(-t[i] / T) + B;
+		sum += pow(f - y[i], 2) / pow(e[i], 2);
 	}
 	return sum;
 }
@@ -28,7 +30,8 @@ double deviation(const gsl_vector *x, void *params) {
 int main() {
 	int status;
 	int iter = 0;
-	double dim = 3, eps = 1e-3, step = 1;
+	const int dim = 3;
+	const double eps = 1e-3, step = 1;
 	const gsl_multimin_fminimizer_type *T = gsl_multimin_fminimizer_nmsimplex2;
 
 	// Load data
@@ -39,10 +42,11 @@ int main() {
 	int n = sizeof(t) / sizeof(t[0]);
 	assert(n == sizeof(y) / sizeof(y[0]) && n == sizeof(e) / sizeof(e[0]));
 
-	printf("t[i]\ty[i]\te[i]");
+	printf("t\ty\te");
 	for(int i = 0; i < n; i++) {
 		printf("%g\t%g\t%g\n", t[i], y[i], e[i]);
 	}
+	printf("\n\n");
 
 	struct exp_data params;
 	params.n=n;
@@ -67,6 +71,26 @@ int main() {
 	gsl_multimin_fminimizer *s = gsl_multimin_fminimizer_alloc(T, dim);
 	gsl_multimin_fminimizer_set(s, &F, x, ss);
 
+	do {
+		iter++;
+		status = gsl_multimin_fminimizer_iterate(s);
 
+		if (status != 0)
+			break;
 
+		status = gsl_multimin_test_size(s->size, eps);
+
+		if (status == GSL_SUCCESS)
+			printf("Convergence, minimum found at: \n");
+		printf("%5d %.5f %.5f %.5f %8g %8g\n", iter,
+				gsl_vector_get(s->x, 0), gsl_vector_get(s->x, 1), gsl_vector_get(s->x, 2),
+				s->fval, s->size);
+	}
+	while (status == GSL_CONTINUE && iter < 100);
+
+	gsl_vector_free(x);
+	gsl_vector_free(ss);
+	gsl_multimin_fminimizer_free(s);
+
+	return status;
 }

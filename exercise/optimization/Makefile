@@ -8,30 +8,30 @@ PLOTTER = gnuplot
 
 .PHONEY: all plot.$(FORMAT) clean 
 
-all : out_rosenbrock.txt # plot.$(FORMAT)
+all : out_rosenbrock.txt plot.$(FORMAT)
 
-plot.$(FORMAT) : out_integ.txt Makefile
+plot.$(FORMAT) : out_leastsquares.txt Makefile
 	echo 'set term $(FORMAT)' >> $(SCRIPT)
-	echo 'set title "Energies from the variational method"' >> $(SCRIPT)
+	echo 'set title "Least-squares fit to data"' >> $(SCRIPT)
 	echo 'set output "$@"' >> $(SCRIPT)
 	echo 'set key out' >> $(SCRIPT)
 	echo 'set grid' >> $(SCRIPT)
-	echo 'set xlabel "Alpha"' >> $(SCRIPT)
-	echo 'set ylabel "Energy"' >> $(SCRIPT)
+	echo 'set xlabel "Time"' >> $(SCRIPT)
+	echo 'set ylabel "Activity"' >> $(SCRIPT)
 	echo 'plot \' >> $(SCRIPT)
-	echo '"$(word 1, $^)" using "a":"E(a)" with lines notitle \' >> $(SCRIPT)
+	echo '"$(word 1, $^)" using "t":"y" with points notitle \' >> $(SCRIPT)
 	$(PLOTTER) $(SCRIPT)
 
 out_rosenbrock.txt : rosenbrock
 	./$^ > $@
 
-out_integ.txt : integ
+out_leastsquares.txt : leastsquares
 	./$^ > $@
 
 rosenbrock: rosenbrock.c
 	cc $^ -o $@ $(CFLAGS) $(LDLIBS)
 
-integ : integ.c
+leastsquares : main.c
 	cc $^ -o $@ $(CFLAGS) $(LDLIBS)
 clean : 
 	find ./ -type f -executable -delete
