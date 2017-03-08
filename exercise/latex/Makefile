@@ -5,6 +5,9 @@ LDLIBS += `gsl-config --libs`
 FORMAT = pdf
 SCRIPT = log
 PLOTTER = gnuplot
+SOURCES = error.c
+OBJECTS = $(SOURCES: .c=.o)  # change the postfix from .c to .o
+EXECUTEABLE = error
 
 .PHONEY: all plot.$(FORMAT) clean 
 
@@ -23,11 +26,11 @@ plot.$(FORMAT) : out_error.txt Makefile
 	echo '"$(word 1, $^)" using "t":"y(t)" with lines notitle \' >> $(SCRIPT)
 	$(PLOTTER) $(SCRIPT)
 
-out_error.txt : error
-	./error -3.0 3.0 0.2  > $@
+out_error.txt : $(EXECUTEABLE)
+	./$^ -3.0 3.0 0.2  > $@
 
-error : error.c
+$(EXECUTEABLE) : $(SOURCES)
 	cc $^ -o $@ $(CFLAGS) $(LDLIBS)
 clean : 
 	find ./ -type f -executable -delete
-	$(RM) *.dat $(SCRIPT) *.svg *.png *.pdf log*
+	$(RM) *.txt $(SCRIPT) log*

@@ -10,7 +10,7 @@ SCRIPT = log.gpi
 FORMAT = pdf
 PLOTTER = gnuplot
 
-.PHONEY: all plot.$(FORMAT) clean # To make sure that default is not a file, but an action.
+.PHONEY: all plot.$(FORMAT) clean 
 
 all : plot.$(FORMAT) data
 
@@ -29,12 +29,11 @@ plot.$(FORMAT) : data Makefile
 	$(PLOTTER) $(SCRIPT)
 
 data : $(EXECUTEABLE)
-	./$< >$(word 1, $@)  # send standard output into 'data'
+	./$< >$@  # send standard output into 'data'
 
 $(EXECUTEABLE): $(OBJECTS)
 	cc $(OBJECTS) -o $@ $(CFLAGS) $(LDLIBS)
 
-# clean removes all temporary files, only the original files remain.
 clean : 
 	find ./ -type f -executable -delete
 	$(RM) *.dat $(SCRIPT) *.svg *.png *.pdf log*
