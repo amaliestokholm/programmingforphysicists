@@ -6,4 +6,5 @@ set grid
 set xlabel "Time"
 set ylabel "Activity"
 plot \
-"out_leastsquares.txt" using "t":"y" with points notitle \
+"out_leastsquares.txt" index 0 with errorbars title "Experiment" \
+, "out_leastsquares.txt" index 1 with lines title "Model"

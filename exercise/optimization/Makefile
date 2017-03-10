@@ -19,7 +19,8 @@ plot.$(FORMAT) : out_leastsquares.txt Makefile
 	echo 'set xlabel "Time"' >> $(SCRIPT)
 	echo 'set ylabel "Activity"' >> $(SCRIPT)
 	echo 'plot \' >> $(SCRIPT)
-	echo '"$(word 1, $^)" using "t":"y" with points notitle \' >> $(SCRIPT)
+	echo '"$(word 1, $^)" index 0 with errorbars title "Experiment" \' >> $(SCRIPT)
+	echo ', "$(word 1, $^)" index 1 with lines title "Model"' >> $(SCRIPT)
 	$(PLOTTER) $(SCRIPT)
 
 out_rosenbrock.txt : rosenbrock

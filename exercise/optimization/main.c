@@ -42,7 +42,7 @@ int main() {
 	int n = sizeof(t) / sizeof(t[0]);
 	assert(n == sizeof(y) / sizeof(y[0]) && n == sizeof(e) / sizeof(e[0]));
 
-	printf("t\ty\te");
+	printf("# t\ty\te");
 	for(int i = 0; i < n; i++) {
 		printf("%g\t%g\t%g\n", t[i], y[i], e[i]);
 	}
@@ -81,12 +81,22 @@ int main() {
 		status = gsl_multimin_test_size(s->size, eps);
 
 		if (status == GSL_SUCCESS)
-			printf("Convergence, minimum found at: \n");
-		printf("%5d %.5f %.5f %.5f %8g %8g\n", iter,
+			fprintf(stderr, "Convergence, minimum found at: \n");
+		fprintf(stderr, "%5d %.5f %.5f %.5f %8g %8g\n", iter,
 				gsl_vector_get(s->x, 0), gsl_vector_get(s->x, 1), gsl_vector_get(s->x, 2),
 				s->fval, s->size);
 	}
 	while (status == GSL_CONTINUE && iter < 100);
+	
+	double A = gsl_vector_get(s->x, 0);
+	double Tr = gsl_vector_get(s->x, 1);
+	double B = gsl_vector_get(s->x, 2);
+
+	printf("# t, A*exp(-t/T)+B\n");
+	double dt = (t[n-1] - t[0]) / 50;
+	for (double ti = t[0]; ti < t[n-1] + dt; ti +=dt) {
+		printf("%g\t%g\n", ti, A*exp(-ti/Tr)+B);
+	}
 
 	gsl_vector_free(x);
 	gsl_vector_free(ss);
