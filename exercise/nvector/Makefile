@@ -1,19 +1,18 @@
-# make knows a lot. try 'make -p'
-CFLAGS = -Wall -std=gnu99 # print out ALL warnings
-LDLIBS = -lm  # links to math
+CFLAGS = -Wall -std=gnu99
+LDLIBS = -lm 
 SOURCES = main.c nvector.c 
-OBJECTS = $(SOURCES: .c=.o)  # change the postfix from .c to .o
+OBJECTS = $(SOURCES: .c=.o)
 EXECUTEABLE = nvector
 
-.PHONEY: out.txt clean  # To make sure that default is not a file, but an action.
+.PHONY: out.txt clean
 
 out.txt : $(SOURCES) $(EXECUTEABLE)
-	./$(EXECUTEABLE) > $@  # whatever main prints to the terminal is also send to out.txt
+	./$(EXECUTEABLE) > $@
 
 $(EXECUTEABLE): $(OBJECTS)
 	cc $(OBJECTS) -o $@ $(LDLIBS)
 
+clean :                                                            
+	find ./ -type f -executable -delete
+	$(RM) *.txt $(SCRIPT) *.pdf log*
 
-# clean removes all temporary files, only the original files remain.
-clean : 
-	rm --force *.o *~ out.txt
