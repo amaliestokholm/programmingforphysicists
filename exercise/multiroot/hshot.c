@@ -4,6 +4,13 @@
 #include <gsl/gsl_vector.h>
 #include <gsl/gsl_multiroots.h>
 #include <assert.h>
+#define eps 1e-6
+
+double feps(double e, double r) {
+	const double rmin = eps;
+	if (r < rmin) return r - (r * r);
+	assert(r>=0);
+
 
 
 
@@ -48,9 +55,9 @@ int main(int argc, char** argv) {
 	}
 	while(status == GSL_CONTINUE && iter < iter_max);
 
-	 double e=gsl_vector_get(solver->x,0);
-	printf("# rmax, e\n");
-	printf("%g %g\n",rmax,e);
+	double e=gsl_vector_get(solver->x, 0);
+	printf("# rmax,\te\n");
+	printf("%g\t%g\n",rmax, e);
 	printf("\n\n");
 
 	printf("# r, Feps(e,r), exact\n");
