@@ -7,8 +7,8 @@
 #include <gsl/gsl_odeiv2.h>
 #define step gsl_odeiv2_step_rkf45 // Runge-Kutta-Fehlberg method
 #define start 1e-3
-#define abseps 1e-6
-#define eps 1e-6
+#define abseps 1e-3
+#define eps 1e-3
 
 int ode_h(double r, const double y[], double yp[], void* params) {
 	double e = *(double*)params;
@@ -18,9 +18,9 @@ int ode_h(double r, const double y[], double yp[], void* params) {
 }
 
 double feps(double e, double r) {
+	assert(r >= 0);
 	const double rmin = eps;
 	if (r < rmin) return r - (r * r);
-	assert(r >= 0);
 
 	gsl_odeiv2_system sys;
 	sys.function = ode_h;
@@ -54,7 +54,7 @@ int hydrogen(const gsl_vector* x, void* params, gsl_vector* f) {
 
 int main(int argc, char** argv) {
 	int status, flag;
-	int iter = 0, iter_max = 1000;
+	int iter = 0, iter_max = 100;
 	int dim = 1, points = 64;
 	const gsl_multiroot_fsolver_type* T = gsl_multiroot_fsolver_broyden;
 	gsl_vector* x;
@@ -87,11 +87,12 @@ int main(int argc, char** argv) {
 	printf("%g\t%g\n",rmax, e);
 	printf("\n\n");
 
-	printf("# r, Feps(e,r), exact\n");
+	printf("# r, Feps(e,r), Exact\n");
 	for(double r = 0; r <= rmax; r += rmax/points) {
-		printf("%g %g %g\n", r, feps(e, r), r * exp(-r) * feps(e, 1) * exp(1));
+		printf("%g\t%g\t%g\n", r, feps(e, r), r * exp(-r));
 	}
 
+	printf("\n\n");
 	gsl_vector_free(x);
 	gsl_multiroot_fsolver_free(s);
 
