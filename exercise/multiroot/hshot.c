@@ -4,15 +4,42 @@
 #include <gsl/gsl_vector.h>
 #include <gsl/gsl_multiroots.h>
 #include <assert.h>
+#include <gsl/gsl_odeiv2.h>
+#define step gsl_odeiv2_step_rkf45 // Runge-Kutta-Fehlberg method
+#define start 1e-3
+#define abseps 1e-6
 #define eps 1e-6
+
+int ode_h(double r, const double y[], double yp[], void* params) {
+	double e = *(double*)params;
+	yp[0] = y[1];
+	yp[1] = 2 * (-1 / r - e) * y[0];
+	return GSL_SUCCESS;
+}
 
 double feps(double e, double r) {
 	const double rmin = eps;
 	if (r < rmin) return r - (r * r);
-	assert(r>=0);
+	assert(r >= 0);
 
+	gsl_odeiv2_system sys;
+	sys.function = ode_h;
+	sys.jacobian = NULL;
+	sys.dimension = 2;
+	sys.params = (void*)&e;
 
+	gsl_odeiv2_driver* driv = gsl_odeiv2_driver_alloc_y_new(&sys, step, start, abseps, eps);
 
+	double t = rmin;
+	double y[] = {t - (t * t), 1 - (2 * t)};
+	int flag = gsl_odeiv2_driver_apply(driv, &t, r, y);
+	if (flag != GSL_SUCCESS) {
+		fprintf(stderr, "odeiv2 error %d\n", flag);
+	}
+
+	gsl_odeiv2_driver_free(driv);
+	return y[0];
+}
 
 int hydrogen(const gsl_vector* x, void* params, gsl_vector* f) {
 	double ex = gsl_vector_get(x, 0);
@@ -21,7 +48,7 @@ int hydrogen(const gsl_vector* x, void* params, gsl_vector* f) {
 	double fval = feps(ex, rmax);
 
 	gsl_vector_set(f, 0, fval);
-	return GSL_SUCCES;
+	return GSL_SUCCESS;
 }
 
 
@@ -55,7 +82,7 @@ int main(int argc, char** argv) {
 	}
 	while(status == GSL_CONTINUE && iter < iter_max);
 
-	double e=gsl_vector_get(solver->x, 0);
+	double e = gsl_vector_get(s->x, 0);
 	printf("# rmax,\te\n");
 	printf("%g\t%g\n",rmax, e);
 	printf("\n\n");

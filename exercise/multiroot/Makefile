@@ -8,7 +8,7 @@ PLOTTER = gnuplot
 
 .PHONEY: all plot.$(FORMAT) clean 
 
-all : out_rosenbrock.txt #plot.$(FORMAT)
+all : out_rosenbrock.txt out_hshot.txt  #plot.$(FORMAT)
 
 plot.$(FORMAT) : out_leastsquares.txt Makefile
 	echo 'set term $(FORMAT)' >> $(SCRIPT)
@@ -26,10 +26,13 @@ plot.$(FORMAT) : out_leastsquares.txt Makefile
 out_rosenbrock.txt : rosenbrock
 	./$^ > $@
 
+out_hshot.txt : hshot
+	./$^ > $@
+
 rosenbrock: rosenbrock.c
 	cc $^ -o $@ $(CFLAGS) $(LDLIBS)
 
-hej : main.c
+hshot : hshot.c
 	cc $^ -o $@ $(CFLAGS) $(LDLIBS)
 clean : 
 	find ./ -type f -executable -delete
