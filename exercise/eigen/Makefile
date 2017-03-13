@@ -1,19 +1,17 @@
-# make knows a lot. try 'make -p'
-CFLAGS = -Wall -std=gnu99 # print out ALL warnings
-LDLIBS = -lm  # links to math
+CFLAGS = -Wall -std=gnu99 
+LDLIBS = -lm 
 CFLAGS += `gsl-config --cflags`
 LDLIBS += `gsl-config --libs`
 SOURCES = main.c 
-OBJECTS = $(SOURCES: .c=.o)  # change the postfix from .c to .o
+OBJECTS = $(SOURCES: .c=.o)
 EXECUTEABLE = eigen
 SCRIPT = log.gpi
 FORMAT = pdf
 PLOTTER = gnuplot
 
-.PHONEY: all plot.$(FORMAT) clean 
+.PHONY: all plot.$(FORMAT) clean 
 
 all : plot.$(FORMAT) data
-
 
 plot.$(FORMAT) : data Makefile
 	echo 'set term $(FORMAT)' >> $(SCRIPT)
@@ -29,11 +27,12 @@ plot.$(FORMAT) : data Makefile
 	$(PLOTTER) $(SCRIPT)
 
 data : $(EXECUTEABLE)
-	./$< >$@  # send standard output into 'data'
+	./$< >$@ 
 
 $(EXECUTEABLE): $(OBJECTS)
 	cc $(OBJECTS) -o $@ $(CFLAGS) $(LDLIBS)
 
-clean : 
+clean :                                                            
 	find ./ -type f -executable -delete
-	$(RM) *.dat $(SCRIPT) *.svg *.png *.pdf log*
+	$(RM) data *.txt $(SCRIPT) *.pdf log*
+
