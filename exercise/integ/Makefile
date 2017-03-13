@@ -33,6 +33,7 @@ lnsqrt : lnsqrt.c
 
 integ : integ.c
 	cc $^ -o $@ $(CFLAGS) $(LDLIBS)
+
 clean : 
 	find ./ -type f -executable -delete
-	$(RM) *.dat $(SCRIPT) *.svg *.png *.pdf log*
+	$(RM) *.txt $(SCRIPT) *.pdf log*
