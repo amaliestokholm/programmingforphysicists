@@ -1,11 +1,10 @@
-# make knows a lot. try 'make -p'
-CFLAGS = -Wall -std=gnu99 # print out ALL warnings
-LDLIBS = -lm  # links to math
+CFLAGS = -Wall -std=gnu99
+LDLIBS = -lm
 SCRIPT = log.gpi
 FORMAT = pdf
 PLOTTER = gnuplot
 
-.PHONEY: all out.txt clean  # To make sure that default is not a file, but an action.
+.PHONEY: all out.txt clean
 
 all: main-stdio main-cmdline plot.$(FORMAT)
 
@@ -38,8 +37,7 @@ in.dat : Makefile
 	cat /dev/null > $@
 	for x in `seq 0 0.2 5`; do echo $$x >> $@; done
 
-
-# clean removes all temporary files, only the original files remain.
-clean : 
+clean :                                                            
 	find ./ -type f -executable -delete
-	$(RM) *.dat $(SCRIPT) *.svg *.png *.pdf log*
+	$(RM) *.dat *.txt $(SCRIPT) *.pdf log*
+
