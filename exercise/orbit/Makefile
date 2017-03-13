@@ -6,7 +6,7 @@ FORMAT = pdf
 SCRIPT = log
 PLOTTER = gnuplot
 
-.PHONEY: all plot.$(FORMAT) clean 
+.PHONY: all plot.$(FORMAT) clean 
 
 all : out_ydiff.txt plot.$(FORMAT)
 
@@ -34,6 +34,7 @@ orbit : orbit.c
 
 ydiff : ydiff.c
 	cc $^ -o $@ $(CFLAGS) $(LDLIBS)
+
 clean : 
 	find ./ -type f -executable -delete
-	$(RM) *.dat $(SCRIPT) *.svg *.png *.pdf log*
+	$(RM) $(SCRIPT) *.pdf log* *.txt
