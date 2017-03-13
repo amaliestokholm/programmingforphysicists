@@ -1,5 +1,5 @@
 FLAGS = -std=gnu99 -Wall
-.PHONEY: all clean
+.PHONY: all clean
 
 all: out.txt
 	cat out.txt
@@ -11,4 +11,4 @@ hello: hello.c
 	cc $(CFLAGS) hello.c -o hello
 
 clean:
-	$(RM) hello #out.txt
+	$(RM) hello out.txt
