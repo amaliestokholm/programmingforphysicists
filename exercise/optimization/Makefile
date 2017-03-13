@@ -34,6 +34,7 @@ rosenbrock: rosenbrock.c
 
 leastsquares : main.c
 	cc $^ -o $@ $(CFLAGS) $(LDLIBS)
+
 clean : 
 	find ./ -type f -executable -delete
-	$(RM) *.dat $(SCRIPT) *.svg *.png *.pdf log*
+	$(RM) *.txt $(SCRIPT) *.pdf log*
