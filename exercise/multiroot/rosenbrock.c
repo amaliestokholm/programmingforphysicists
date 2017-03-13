@@ -1,9 +1,11 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 #include <gsl/gsl_vector.h>
 #include <gsl/gsl_multiroots.h>
+#include <assert.h>
 
-int rosenbrock(const gsl_vector *v, gsl_vector *f) {
+int rosenbrock(const gsl_vector *v, void *params, gsl_vector *f) {
 	double x = gsl_vector_get(v, 0);
 	double y = gsl_vector_get(v, 1);
 
@@ -20,14 +22,14 @@ int main() {
 	const gsl_multiroot_fsolver_type *T =  gsl_multiroot_fsolver_hybrids;
 
 	// Initialise method
-	gsl_multiroot_function f = {&rosenbrock, dim};
+	gsl_multiroot_function F = {.f=rosenbrock, .n=dim};
 
 	x = gsl_vector_alloc(dim);
 	gsl_vector_set(x, 0, 2);
 	gsl_vector_set(x, 1, 2);
 
 	gsl_multiroot_fsolver *s = gsl_multiroot_fsolver_alloc(T, dim);
-	gsl_multiroot_fsolver_set(s, &f, x);
+	gsl_multiroot_fsolver_set(s, &F, x);
 
 	do {
 		iter++;
@@ -40,7 +42,7 @@ int main() {
 	} 
 	while (status == GSL_CONTINUE && iter < iter_max);
 
-	printf("i = %d, x = %.3f %.3f, f(x) = %.3f %.3f", iter,
+	printf("i = %d, x = %.3f %.3f, f(x) = %.3f %.3f\n", iter,
 			gsl_vector_get(s->x, 0), gsl_vector_get(s->x, 1),
 			gsl_vector_get(s->f, 0), gsl_vector_get(s->f, 1));
 	gsl_vector_free(x);

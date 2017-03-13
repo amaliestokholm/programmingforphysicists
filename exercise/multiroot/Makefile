@@ -1,4 +1,4 @@
-CFLAGS = -Wall -std=gnu99 
+CFLAGS = -Wall -std=gnu99 -g
 LDLIBS = -lm 
 CFLAGS += `gsl-config --cflags`
 LDLIBS += `gsl-config --libs`
