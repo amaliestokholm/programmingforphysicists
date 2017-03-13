@@ -1,10 +1,10 @@
 set term pdf
-set title "Orbital motion"
+set title "Error function"
 set output "plot.pdf"
 set key out
 set size ratio -1
 set grid
 set xlabel "x"
-set ylabel "y"
+set ylabel "u(x)"
 plot \
 "out_error.txt" using "t":"y(t)" with lines notitle \
