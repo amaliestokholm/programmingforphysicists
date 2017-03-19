@@ -4,7 +4,7 @@ SCRIPT = log.gpi
 FORMAT = pdf
 PLOTTER = gnuplot
 
-.PHONEY: all out.txt clean
+.PHONY: all out.txt clean
 
 all: main-stdio main-cmdline plot.$(FORMAT)
 
