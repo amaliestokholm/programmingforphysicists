@@ -6,7 +6,7 @@ FORMAT = pdf
 SCRIPT = log
 PLOTTER = gnuplot
 
-.PHONEY: all plot.$(FORMAT) clean 
+.PHONY: all plot.$(FORMAT) clean 
 
 all : out_lnsqrt.txt plot.$(FORMAT)
 
