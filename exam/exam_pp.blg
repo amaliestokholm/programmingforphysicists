@@ -1,5 +1,0 @@
-[1] Config.pm:340> INFO - This is Biber 2.4
-[1] Config.pm:343> INFO - Logfile is 'exam_pp.blg'
-[66] biber:287> INFO - === Wed Mar 22, 2017, 22:51:57
-[165] Biber.pm:348> INFO - Reading 'exam_pp.bcf'
-[340] Utils.pm:147> WARN - No data sources defined!
