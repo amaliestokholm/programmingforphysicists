@@ -68,7 +68,7 @@
 % PDF accessibility support for literate listings
 \usepackage{accsupp}
 	\lstset{
-			language=Python,
+			language=c,
 			basicstyle=\small\sffamily,
 			keywordstyle=\color{deepblue},  
 			emphstyle=\color{deepred},    
@@ -134,16 +134,6 @@
 \setulmargins{*}{*}{1.6181}
 \setlrmargins{*}{*}{1}
 \checkandfixthelayout[nearest] % needed in order for memoir to compile these settings correctly.
-
-% TÅGEKAMMERET package allowing the right naming of tk
-%\usepackage{tket}
-% Headers and footers from TÅGEKAMMERETs documents
-%\makepagestyle{tket}
-%\makeevenfoot{tket}{\thepage}{}{}
-%\makeoddfoot{tket}{}{}{\thepage}
-%\pagestyle{headings}
-%\chapterstyle{hangnum}
-
 % Macros
 \author{Amalie Louise Stokholm}
 \date{\today}
@@ -153,49 +143,57 @@
 \newcommand{\chapref}[1]{Chap.\@~\ref{#1}\xspace}
 \newcommand{\tabref}[1]{Table~\ref{#1}\xspace}
 \renewcommand{\eqref}[1]{Eq.\@~\ref{#1}\xspace}
-\newcommand{\kepler}{\emph{Kepler}\xspace}
-\newcommand{\hipparcos}{Hipparcos\xspace}
-\newcommand{\brunt}{Brunt-Väisälä\xspace}
-\newcommand{\nat}{Nature\xspace}
-\newcommand{\aap}{Astronomy \& Astrophysics\xspace}
-\newcommand{\araa}{Annual Review of Astronomy and Astrophysics\xspace}
-\newcommand{\apj}{The Astrophysical Journal\xspace}
-\newcommand{\apjs}{The Astrophysical Journal Supplement\xspace}
-\newcommand{\aj}{Astronomical Journal\xspace}
-\newcommand{\apjl}{Astrophysical Journal Letters\xspace}
-\newcommand{\mnras}{Monthly Notices of the Royal Astronomical Society\xspace}
-
-% Mathematics macros
-\newcommand{\dx}[1]{\,\text{d}#1}
-\newcommand{\ddxto}[3]{\frac{\text{d}^{#1}{#2}}{\text{d}{#3}^{#1}}}
-\newcommand{\ddx}[2]{\frac{\text{d}{#1}}{\text{d}{#2}}}
-\newcommand{\vecb}[1]{\boldsymbol{{#1}}}
-\newcommand{\teff}{T_{\text{eff}}}
-\newcommand{\logg}{\log\,g}
-\newcommand{\feh}{[\text{Fe}/\text{H}]}
-\newcommand{\angdia}{\theta_\text{LD}}
-\newcommand{\dn}{\Delta \nu}
-\newcommand{\nmax}{\nu_{\text{max}}}
-\newcommand{\lambfreq}{S_l}
-\newcommand{\bruntfreq}{N}
-\newcommand{\accutoff}{\omega_{\text{ac}}}
-\newcommand{\msun}{$M_{\odot}$\xspace}
-
-\selectlanguage{danish} 
-\hyphenation{skala-relationen}
-\selectlanguage{english}
 
 \begin{document}
 \begin{center}
   \sffamily
     {\Large Practical Programming} \\
     \vspace{.8em}
-    {Amalie Louise Stokholm, 201303663, \texttt{stokholm@phys.au.dk}} \\
+    {Amalie Louise Stokholm, 201303663, \texttt{stokholm@phys.au.dk}} \\ {Exam in Practical Programming} \\
   {\today} \\
 \end{center}
-\chapter{Introduction}
+\chapter*{Question about memory leak}
+Will these functions leak memory?
+\begin{lstlisting}
+void stat(){
+	double a[500];
+}
+\end{lstlisting}
+
+\begin{lstlisting}
+void vla(size_t n){
+	double a[n];
+}
+\end{lstlisting}
+
+\begin{lstlisting}
+void mal(){
+	double* a = (double*) malloc(500 * sizeof(double));
+}
+\end{lstlisting}
+
+\begin{lstlisting}
+void maf(){
+	double* a = (double*) malloc(500 * sizeof(double));
+	free(a);
+}
+\end{lstlisting}
+
+\begin{lstlisting}
+double* mar(){
+	double* a = (double*)malloc(500 * sizeof(double));
+	return a;
+}
+\end{lstlisting}
 
 
+\clearpage
+\chapter*{Problem}
+Implement the Bessel function of the first kind of integer index using Bessel’s integral
+representation.
+\begin{equation}
+J_n(x) = \frac{1}{\pi} \int_{0}^{\pi} \cos(nt - x \sin(t))\,\text{d}t.
+\end{equation}
+Compare with the corresponding function from \url{<math.h>} or from GSL.
 
-\printbibliography
 \end{document}
