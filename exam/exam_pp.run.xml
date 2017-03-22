@@ -80,8 +80,5 @@
     <requires type="dynamic">
       <file>exam_pp.bcf</file>
     </requires>
-    <requires type="editable">
-      <file>/home/amalie/essentials/litterature.bib</file>
-    </requires>
   </external>
 </requests>

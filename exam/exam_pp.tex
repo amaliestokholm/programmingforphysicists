@@ -19,44 +19,13 @@
 
 % Mathematics
 \usepackage{amsmath}
-  \let\div\relax
-  \DeclareMathOperator{\div}{div}
-  
-% Allows bold vectors
-\usepackage{bm}
-
-% SI-units
-\usepackage[detect-all]{siunitx}
-	\sisetup{separate-uncertainty=true, % uses \pm instead of parenthesis
-			per-mode=symbol}
-% https://github.com/EdwinChan/latex-hacks/blob/master/astro.sty
-\DeclareSIUnit\solarradius{\ensuremath{\mathit{R}_\odot}}
 
 % References
 \usepackage{varioref}
 \usepackage[colorlinks=true,
 			allcolors=black
 			]{hyperref}
-
-% BibLaTeX, needs installation of Biber
-\usepackage[style=authoryear,
-			backend=biber,
-			hyperref=true,
-			natbib=true,
-            url=false,
-            doi=false,
-            isbn=false,
-            uniquelist=false,
-            uniquename=false,
-            maxcitenames=2,mincitenames=1,
-            ]{biblatex}
-
 \usepackage{cleveref}
-            
-\bibliography{/home/amalie/essentials/litterature.bib}
-% Space in bibliography
-\setlength\bibitemsep{1.5\itemsep} 
-
 
 % Syntaxmarking: python
 % Defining colors
@@ -116,84 +85,71 @@
 			{µ}{$\mu$}1
 			{É}{{\'E}}1,
 }
-% The option to attach files (code)
-\usepackage{attachfile}
-
-% Filler text
-\usepackage{lipsum}
-
-% Fix-me
-\usepackage[draft]{fixme}
-	\fxsetup{layout=footnote}
-
-% Appendix i ToC
-\renewcommand\cftappendixname{\appendixname~}
 
 % Margins (with help from Steffen Videbæk)
 \setlxvchars
-\setulmargins{*}{*}{1.6181}
+\setulmargins{*}{*}{1.618}
 \setlrmargins{*}{*}{1}
 \checkandfixthelayout[nearest] % needed in order for memoir to compile these settings correctly.
-% Macros
-\author{Amalie Louise Stokholm}
-\date{\today}
-\newcommand{\hdformat}[1]{HD~\@{#1}\xspace}
-\newcommand{\figref}[1]{Fig.\@~\ref{#1}\xspace}
-\newcommand{\secref}[1]{Sec.\@~\ref{#1}\xspace}
-\newcommand{\chapref}[1]{Chap.\@~\ref{#1}\xspace}
-\newcommand{\tabref}[1]{Table~\ref{#1}\xspace}
-\renewcommand{\eqref}[1]{Eq.\@~\ref{#1}\xspace}
 
 \begin{document}
 \begin{center}
   \sffamily
-    {\Large Practical Programming} \\
+    {\Large Exam in Practical Programming} \\
     \vspace{.8em}
-    {Amalie Louise Stokholm, 201303663, \texttt{stokholm@phys.au.dk}} \\ {Exam in Practical Programming} \\
-  {\today} \\
+    {Amalie Louise Stokholm, 201303663, \texttt{stokholm@phys.au.dk}} \\
+  {\today}
 \end{center}
-\chapter*{Question about memory leak}
-Will these functions leak memory?
+\subsection*{Will these functions leak memory?}
 \begin{lstlisting}
-void stat(){
+void stat() {
 	double a[500];
 }
 \end{lstlisting}
-
+The functions as \url{stat} stores the temporary variables in the stack. The stack has size limits, but a size of $500$ is probably not big enough to hit this limit. The stack grows and shrinks in memory as the function pushes more variables to it, but the stack is user-friendly as the variables are allocated and freed automatically. As soon as the function has finished, the variables are freed from the stack, the memory is re-usable, and thus there is no memory leak.
 \begin{lstlisting}
-void vla(size_t n){
+void vla(size_t n) {
 	double a[n];
 }
 \end{lstlisting}
-
+This function \url{vla} uses as \url{stat} the stack to store memory. When the function is done, the variables are freed from the stack and the memory can be reused. Just as \url{stat}, this function does not leak memory.
 \begin{lstlisting}
-void mal(){
+void mal() {
 	double* a = (double*) malloc(500 * sizeof(double));
 }
 \end{lstlisting}
-
+In contrast to \url{stat} and \url{vla}, the next couple of functions use the heap, where memory is not managed automatically for the user. The user needs to manually allocate and free memory in order to avoid memory leak. In \url{mal}, the memory is only allocated, but not freed, and therefore there is a memory leak as this leads to a build-up of non-reusable memory.
 \begin{lstlisting}
-void maf(){
+void maf() {
 	double* a = (double*) malloc(500 * sizeof(double));
 	free(a);
 }
 \end{lstlisting}
-
+This function \url{maf} uses the heap, but in contrast to \url{mal}, the memory is both allocated and freed. A memory leak is thus avoided as all the memory can be reused.
 \begin{lstlisting}
-double* mar(){
-	double* a = (double*)malloc(500 * sizeof(double));
+double* mar() {
+	double* a = (double*) malloc(500 * sizeof(double));
 	return a;
 }
 \end{lstlisting}
-
+In \url{mar}, there is no memory leak as it returns a pointer. A function calling this function can reuse the memory allocated by $a$ by using this pointer.
 
 \clearpage
-\chapter*{Problem}
+\section*{Problem}
 Implement the Bessel function of the first kind of integer index using Bessel’s integral
 representation.
 \begin{equation}
 J_n(x) = \frac{1}{\pi} \int_{0}^{\pi} \cos(nt - x \sin(t))\,\text{d}t.
 \end{equation}
 Compare with the corresponding function from \url{<math.h>} or from GSL.
+\plainbreak1
+
+
+\begin{figure} [b!]
+\centering
+\includegraphics[width=1\linewidth]{plot}
+\caption{Comparison between the calculated $J_n(x)$ (points) and $J_n(x)$ from \url{<math.h>} (lines) for a given $n$.}
+\label{fig:plot}
+\end{figure}
 
 \end{document}
