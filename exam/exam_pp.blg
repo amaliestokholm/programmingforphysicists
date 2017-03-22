@@ -1,0 +1,9 @@
+[1] Config.pm:340> INFO - This is Biber 2.4
+[1] Config.pm:343> INFO - Logfile is 'exam_pp.blg'
+[132] biber:287> INFO - === Wed Mar 22, 2017, 09:40:18
+[398] Biber.pm:348> INFO - Reading 'exam_pp.bcf'
+[565] Biber.pm:742> INFO - Found 0 citekeys in bib section 0
+[565] Utils.pm:147> WARN - The file 'exam_pp.bcf' does not contain any citations!
+[756] bbl.pm:519> INFO - Writing 'exam_pp.bbl' with encoding 'UTF-8'
+[760] bbl.pm:615> INFO - Output to exam_pp.bbl
+[761] Biber.pm:109> INFO - WARNINGS: 1

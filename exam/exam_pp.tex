@@ -1,0 +1,201 @@
+\documentclass[a4paper,oneside,11pt,article]{memoir}
+
+% This preamble is written by Amalie Stokholm with the help and inspiration from Steffen Videbæk, Mathias Rav, Rasmus Villemoes and Lars 'daleif' Madsen. 
+
+% Check input
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% Fonts and microtype
+\usepackage[danish,english]{babel}
+\usepackage{lmodern}
+\usepackage[final]{microtype}
+
+\usepackage{url}
+\usepackage{xspace}
+
+% Graphics
+\usepackage{graphicx}
+
+% Mathematics
+\usepackage{amsmath}
+  \let\div\relax
+  \DeclareMathOperator{\div}{div}
+  
+% Allows bold vectors
+\usepackage{bm}
+
+% SI-units
+\usepackage[detect-all]{siunitx}
+	\sisetup{separate-uncertainty=true, % uses \pm instead of parenthesis
+			per-mode=symbol}
+% https://github.com/EdwinChan/latex-hacks/blob/master/astro.sty
+\DeclareSIUnit\solarradius{\ensuremath{\mathit{R}_\odot}}
+
+% References
+\usepackage{varioref}
+\usepackage[colorlinks=true,
+			allcolors=black
+			]{hyperref}
+
+% BibLaTeX, needs installation of Biber
+\usepackage[style=authoryear,
+			backend=biber,
+			hyperref=true,
+			natbib=true,
+            url=false,
+            doi=false,
+            isbn=false,
+            uniquelist=false,
+            uniquename=false,
+            maxcitenames=2,mincitenames=1,
+            ]{biblatex}
+
+\usepackage{cleveref}
+            
+\bibliography{/home/amalie/essentials/litterature.bib}
+% Space in bibliography
+\setlength\bibitemsep{1.5\itemsep} 
+
+
+% Syntaxmarking: python
+% Defining colors
+\usepackage{color}
+	\definecolor{deepblue}{rgb}{0,0,0.5}
+	\definecolor{deepred}{rgb}{0.6,0,0}
+	\definecolor{deepgreen}{rgb}{0,0.5,0}
+\usepackage{listings}
+% PDF accessibility support for literate listings
+\usepackage{accsupp}
+	\lstset{
+			language=Python,
+			basicstyle=\small\sffamily,
+			keywordstyle=\color{deepblue},  
+			emphstyle=\color{deepred},    
+			stringstyle=\color{deepgreen},
+			commentstyle=\color{red},        
+			showstringspaces=false,
+			columns=fullflexible,
+			keepspaces=true,
+			numbers=left,
+			numbersep=20pt,
+			numberstyle=\tiny,
+			% escapeinside={$}{$},
+			% mathescape=true,
+			literate=
+			{_}{%
+			  \makebox[0pt][l]{%
+			    \makebox[4pt][c]{%
+			      \textcolor{white}{\_}}}%
+			  \rule[-0.4pt]{4pt}{0.4pt}%
+			}1
+			{-}{%
+			  % http://tex.stackexchange.com/a/18509/76220
+			  % Use accessibility support to change what text
+			  % is copied out of the PDF: ASCII hyphen
+			  % instead of Unicode minus
+			  \BeginAccSupp{
+			    method=escape,
+			    ActualText={-}
+			  }%
+			  $-$%
+			  \EndAccSupp{}%
+			}1
+			{*}{%
+			  % http://tex.stackexchange.com/a/18509/76220
+			  % Use accessibility support to change what text
+			  % is copied out of the PDF: ASCII hyphen
+			  % instead of Unicode minus
+			  \BeginAccSupp{
+			    method=escape,
+			    ActualText={*}
+			  }%
+			  $*$%
+			  \EndAccSupp{}%
+			}1
+			{µ}{$\mu$}1
+			{É}{{\'E}}1,
+}
+% The option to attach files (code)
+\usepackage{attachfile}
+
+% Filler text
+\usepackage{lipsum}
+
+% Fix-me
+\usepackage[draft]{fixme}
+	\fxsetup{layout=footnote}
+
+% Appendix i ToC
+\renewcommand\cftappendixname{\appendixname~}
+
+% Margins (with help from Steffen Videbæk)
+\setlxvchars
+\setulmargins{*}{*}{1.6181}
+\setlrmargins{*}{*}{1}
+\checkandfixthelayout[nearest] % needed in order for memoir to compile these settings correctly.
+
+% TÅGEKAMMERET package allowing the right naming of tk
+%\usepackage{tket}
+% Headers and footers from TÅGEKAMMERETs documents
+%\makepagestyle{tket}
+%\makeevenfoot{tket}{\thepage}{}{}
+%\makeoddfoot{tket}{}{}{\thepage}
+%\pagestyle{headings}
+%\chapterstyle{hangnum}
+
+% Macros
+\author{Amalie Louise Stokholm}
+\date{\today}
+\newcommand{\hdformat}[1]{HD~\@{#1}\xspace}
+\newcommand{\figref}[1]{Fig.\@~\ref{#1}\xspace}
+\newcommand{\secref}[1]{Sec.\@~\ref{#1}\xspace}
+\newcommand{\chapref}[1]{Chap.\@~\ref{#1}\xspace}
+\newcommand{\tabref}[1]{Table~\ref{#1}\xspace}
+\renewcommand{\eqref}[1]{Eq.\@~\ref{#1}\xspace}
+\newcommand{\kepler}{\emph{Kepler}\xspace}
+\newcommand{\hipparcos}{Hipparcos\xspace}
+\newcommand{\brunt}{Brunt-Väisälä\xspace}
+\newcommand{\nat}{Nature\xspace}
+\newcommand{\aap}{Astronomy \& Astrophysics\xspace}
+\newcommand{\araa}{Annual Review of Astronomy and Astrophysics\xspace}
+\newcommand{\apj}{The Astrophysical Journal\xspace}
+\newcommand{\apjs}{The Astrophysical Journal Supplement\xspace}
+\newcommand{\aj}{Astronomical Journal\xspace}
+\newcommand{\apjl}{Astrophysical Journal Letters\xspace}
+\newcommand{\mnras}{Monthly Notices of the Royal Astronomical Society\xspace}
+
+% Mathematics macros
+\newcommand{\dx}[1]{\,\text{d}#1}
+\newcommand{\ddxto}[3]{\frac{\text{d}^{#1}{#2}}{\text{d}{#3}^{#1}}}
+\newcommand{\ddx}[2]{\frac{\text{d}{#1}}{\text{d}{#2}}}
+\newcommand{\vecb}[1]{\boldsymbol{{#1}}}
+\newcommand{\teff}{T_{\text{eff}}}
+\newcommand{\logg}{\log\,g}
+\newcommand{\feh}{[\text{Fe}/\text{H}]}
+\newcommand{\angdia}{\theta_\text{LD}}
+\newcommand{\dn}{\Delta \nu}
+\newcommand{\nmax}{\nu_{\text{max}}}
+\newcommand{\lambfreq}{S_l}
+\newcommand{\bruntfreq}{N}
+\newcommand{\accutoff}{\omega_{\text{ac}}}
+\newcommand{\msun}{$M_{\odot}$\xspace}
+
+\selectlanguage{danish} 
+\hyphenation{skala-relationen}
+\selectlanguage{english}
+
+\begin{document}
+\begin{center}
+  \sffamily
+    {\Large Practical Programming} \\
+    \vspace{.8em}
+    {Amalie Louise Stokholm, 201303663, \texttt{stokholm@phys.au.dk}} \\
+  {\today} \\
+\end{center}
+\chapter{Introduction}
+
+
+
+\printbibliography
+\end{document}
