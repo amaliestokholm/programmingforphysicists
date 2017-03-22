@@ -2,15 +2,16 @@ FLAGS = -Wall -std=gnu99
 LDLIBS = -lm
 CFLAGS += `gsl-config --cflags`
 LDLIBS += `gsl-config --libs`
+ECHO = /bin/echo
 FORMAT = pdf
 SCRIPT = log
-PLOTTER = gnuplot
+PLOTTER = pyxplot
 
 .PHONY: all plot.$(FORMAT) clean
 
-all : out.txt #plot.$(FORMAT)
+all : plot.$(FORMAT)
 
-plot.$(FORMAT) : out_hshot.txt Makefile
+plot.$(FORMAT) : out.txt Makefile
 	$(RM) $(SCRIPT)
 	$(ECHO) '\
 	set term $(FORMAT); \
@@ -21,10 +22,9 @@ plot.$(FORMAT) : out_hshot.txt Makefile
 	set xlabel "x"; \
 	set ylabel "$$J_n(x)$$"; \
 	plot \
-	"$<" index 1 with lines title "Calculated" \
-	,"$<" index 3 with lines title "Exact" \
+	"$<" index 0 with points title "Calculated" \
+	, "$<" index 1 with points title "Exact" \
 	' | tee $(SCRIPT) | $(PLOTTER)
-
 
 out.txt : jn
 	./$^ > $@

@@ -1,0 +1,12 @@
+\
+set term pdf; \
+set output "plot.pdf"; \
+set title "Bessel function "; \
+set tics out; \
+set grid; \
+set xlabel "x"; \
+set ylabel "$J_n(x)$"; \
+plot \
+"out.txt" index 0 with points title "Calculated" \
+, "out.txt" index 1 with points title "Exact" \
+

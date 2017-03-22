@@ -29,7 +29,6 @@ int main() {
 	int n = 0; double x = 0.5;
 
 
-	printf("x\tJn(x)\n");
 	gsl_integration_workspace * w = gsl_integration_workspace_alloc(m);
 	struct bessel_params p = {n, x};
 
@@ -40,13 +39,19 @@ int main() {
 	gsl_integration_qag(&F, start, end, epsabs, epsrel, m, key, w, &result, &error);
 
 	result *= 1 / M_PI;
+	printf("# x, Jn(x)\n");
 	printf("%g\t%g\n", x, result); 
+	printf("\n\n");
 
-	printf("Testing bessel function\n");
+	printf("# x, Jn(x)\n");
+	printf("%g\t%g\n", x, j0(x)); 
+	printf("\n\n");
+
+	fprintf(stderr, "Testing bessel function\n");
 	if (double_equal(result, j0(x)))
-		printf("Test passed with Jn=%g and Jn=%g\n", result, j0(x));
+		fprintf(stderr, "Test passed with Jn=%g and Jn=%g\n", result, j0(x));
 	else 
-		printf("Test failed with Jn=%g and Jn=.%g\n", result, j0(x));
+		fprintf(stderr, "Test failed with Jn=%g and Jn=.%g\n", result, j0(x));
 
 	gsl_integration_workspace_free(w);
 	return 0;
