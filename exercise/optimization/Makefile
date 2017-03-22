@@ -6,7 +6,7 @@ FORMAT = pdf
 SCRIPT = log
 PLOTTER = gnuplot
 
-.PHONEY: all plot.$(FORMAT) clean 
+.PHONY: all plot.$(FORMAT) clean 
 
 all : out_rosenbrock.txt plot.$(FORMAT)
 
@@ -37,4 +37,4 @@ leastsquares : main.c
 
 clean : 
 	find ./ -type f -executable -delete
-	$(RM) *.txt $(SCRIPT) *.pdf log*
+	$(RM) *.txt $(SCRIPT) *.pdf
