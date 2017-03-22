@@ -135,15 +135,18 @@ double* mar() {
 In \url{mar}, there is no memory leak as it returns a pointer. A function calling this function can reuse the memory allocated by $a$ by using this pointer.
 
 \clearpage
-\section*{Problem}
+\subsection*{Problem}
 Implement the Bessel function of the first kind of integer index using Bessel’s integral
 representation.
 \begin{equation}
 J_n(x) = \frac{1}{\pi} \int_{0}^{\pi} \cos(nt - x \sin(t))\,\text{d}t.
+\label{eq:bessel}
 \end{equation}
 Compare with the corresponding function from \url{<math.h>} or from GSL.
 \plainbreak1
+In the \url{Makefile}, can four parameters be defined: the index $n$, $x_{\text{start}}$, $x_{\text{end}}$, and $x_{\text{delta}}$. This allows the user to determine the index of the Bessel function of the first kind and the range of $x$-values wanted for the computation. The \url{Makefile} takes care of generating the properties of the plot (Fig.\@~\ref{fig:plot}), the clean-up routine, and the compilation and linking of the \url{jn.c} into the executable file \url{./jn}.
 
+\url{jn.c} contains Eq.\@~\ref{eq:bessel} in the appropriate form for \url{gsl_integration_qag}, which is the used integration procedure. In two for loops, the value from the integration method and the value from \url{<math.h>} is printed and thus saved in out.txt. In order to check whether the two values are equal, a check is implemented and the result from this test is piped into stderr.
 
 \begin{figure} [b!]
 \centering
